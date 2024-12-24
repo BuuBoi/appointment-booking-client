@@ -1,7 +1,7 @@
 import actionTypes from "../actions/actionTypes";
 
-const initialState = {
-  loading: false,
+const initialState = { //rai cac thuoc tinh cua state
+  loading: false, 
   error: null,
   user: null, // Thông tin người dùng sau khi đăng ký
   isRegistered: false,
@@ -19,7 +19,7 @@ const registerReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        user: action.payload,
+        user: action.payload.data,
         error: null,
         isRegistered: true,
       };
@@ -27,7 +27,7 @@ const registerReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload.message,
         isRegistered: false,
       };
     default:

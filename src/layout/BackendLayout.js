@@ -9,7 +9,7 @@ const BackendLayout = () => {
         <div>
             <Navbar/>
             <div className="flex">
-                <Sidebar/>
+                <Sidebar useRole='admin'/>
                 <Outlet/>
             </div>
         </div>

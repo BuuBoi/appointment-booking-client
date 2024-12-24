@@ -8,8 +8,7 @@ import { useEffect } from "react";
 export default function RegiterForm({
   onSubmit,
   isLoading,
-  error,
-  isRegistered
+  error
 }) {
   const [showPassword, setShowPassword] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
@@ -36,8 +35,10 @@ export default function RegiterForm({
   const handleFormSubmit = async (data) => {
     data.role = role || "USER";
     try {
-      await onSubmit(data); // Chờ đợi khi đăng ký thành công
-      onRegisterSuccess(); // Nếu thành công, gọi thông báo và chuyển trang
+      const result = await onSubmit(data); // Chờ đợi khi đăng ký thành công
+      if(result) reset(); // Nếu thành công, xóa form
+
+      //onRegisterSuccess(); // Nếu thành công, gọi thông báo và chuyển trang
     } catch (error) {
       console.log("Register error: ", error);
       // Bạn có thể xử lý thông báo lỗi tại đây nếu cần
@@ -46,7 +47,8 @@ export default function RegiterForm({
   // Show error message if exists
   useEffect(() => {
     if (error) {
-      toast.error(error.message || "Registration failed");
+      console.log("Register error: ", error);
+      toast.error( `${error}` || "Registration failed");
     }
   }, [error]);
   return (

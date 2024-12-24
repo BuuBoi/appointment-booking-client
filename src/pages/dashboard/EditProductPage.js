@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Header } from "./../../components/Products/EditProduct/Header";
-import { ProductDetails } from "./../../components/Products/EditProduct/ProductDetails";
-import { ProductStatus } from "./../../components/Products/EditProduct/ProductStatus";
-import { ProductImages } from "./../../components/Products/EditProduct/ProductImages";
+import { Header } from "../../components/Products/EditProduct/Header";
+import { ProductDetails } from "../../components/Products/EditProduct/ProductDetails";
+import { ProductStatus } from "../../components/Products/EditProduct/ProductStatus";
+import { ProductImages } from "../../components/Products/EditProduct/ProductImages";
 import StockTable from "../../components/Products/EditProduct/StockTable";
 import CategorySelector from "../../components/Products/EditProduct/CategorySelector";
 

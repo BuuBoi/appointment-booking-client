@@ -1,5 +1,5 @@
 import React from 'react'
-import SettingLayout from '../../components/setting/SettingLayout';
+import SettingLayout from '../../components/Dashboard/settings/SettingLayout';
 
 export default function SettingPage() {
     console.log(window.location.pathname);

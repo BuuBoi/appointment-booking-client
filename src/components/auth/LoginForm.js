@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {

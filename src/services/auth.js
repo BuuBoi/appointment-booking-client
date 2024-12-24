@@ -5,9 +5,10 @@ export const apiRegister = async (data) => {
   try {
     const response = await axiosConfig({
       method: "POST",
-      url: "/auth/register",
+      url: "/api/register",
       data: data,
     });
+    
     if (response.status === 200) {
       return response.data;
     }

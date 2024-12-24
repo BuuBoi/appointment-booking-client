@@ -14,7 +14,7 @@ const commonPersistConfig = {
 const authConfig = {
   ...commonPersistConfig,
   key: "auth",
-  whitelist: ["isLogin", "token"],
+  whitelist: ["token"],
 };
 
 const rootReducer = combineReducers({

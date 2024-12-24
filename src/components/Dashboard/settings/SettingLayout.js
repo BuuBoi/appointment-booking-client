@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Settings } from "lucide-react";
+import AvailalibitySetting from "./AvailalibitySettings";
 
 // interface SettingsTabProps {
 //   label: string;
@@ -25,10 +26,8 @@ const SettingsLayout = () => {
   const [activeTab, setActiveTab] = useState(1);
 
   const tabs = [
-    { id: 1, label: "General" },
-    { id: 2, label: "Security" },
-    { id: 3, label: "Integrations" },
-    { id: 4, label: "Support" },
+    { id: 1, label: "Availability" },
+    { id: 2, label: "Account Settings" },
   ];
 
   return (
@@ -52,10 +51,8 @@ const SettingsLayout = () => {
         </div>
 
         <div className="bg-white rounded-lg shadow-sm p-6">
-          {activeTab === 1 && <div>General Settings</div>}
-          {activeTab === 2 && <div>Security Settings</div>}
-          {activeTab === 3 && <div>Integrations Settings</div>}
-          {activeTab === 4 && <div>Support Settings</div>}
+          {activeTab === 1 && <AvailalibitySetting />}
+          {activeTab === 2 && <div>Account Settings</div>}
         </div>
       </div>
     </div>

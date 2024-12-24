@@ -2,7 +2,7 @@ import RegisterPage from "../pages/front/RegisterPage";
 import { connect } from "react-redux";
 import * as actions from "../store/actions";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     user: state.register.user,
     isLoading: state.register.loading,
     error: state.register.error,
+    isRegistered: state.register.isRegistered,
   };
 }
 const mapDispatchToProps = (dispatch) => ({
@@ -18,9 +19,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-const RegisterContainer = ({onSubmit, isLoading, error,isRegistered }) => {
-  
+const RegisterContainer = ({onSubmit, isLoading, error,isRegistered, user }) => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const query = new URLSearchParams(location.search);
+  const role = query.get("role");
   // const handleRegisterSuccess = () => {
   //   toast.success("Đăng ký thành công!");
   //   navigate("/login");
@@ -28,8 +31,15 @@ const RegisterContainer = ({onSubmit, isLoading, error,isRegistered }) => {
   useEffect(() => {
     if (isRegistered) {
       toast.success("Đăng ký thành công!");
-      navigate("/login");
-    }
+      if(role === "DOCTOR") {
+        navigate(`/onboarding/${user.id}`, {
+          state: {
+            user: user, 
+          }
+        });
+      } else {
+        navigate("/login");
+    }}
   }, [isRegistered]);
   return <RegisterPage onSubmit = {onSubmit} isLoading = {isLoading} error = {error} isRegistered={isRegistered} />;
 };
