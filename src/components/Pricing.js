@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 export default function Pricing() {
 
     const plans = [
         {
             name: "Basic plan",
-            price: 12,
+            price: 0,
             fee:2,
             features: [
                 "Curabitur faucibus",
@@ -90,9 +91,9 @@ export default function Pricing() {
                                     }
                                 </ul>
                                 <div className="flex-1 flex items-end">
-                                    <button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700'>
+                                    <Link to="/register?role=DOCTOR" className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700'>
                                         Get Started
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         ))

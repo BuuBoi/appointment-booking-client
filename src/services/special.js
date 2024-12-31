@@ -4,7 +4,7 @@ export const createSpecial = async (data) => {
     try {
       const response = await axiosConfig({
         method: "POST",
-        url: "/api/specials",
+        url: "/api/specializations",
         data: data,
       });
       
@@ -31,7 +31,7 @@ export const createSpecial = async (data) => {
     try{
         const response = await axiosConfig({
             method: "GET",
-            url: "/api/specials",
+            url: "/api/specializations",
           });
           if (response.status === 200) {
             return response.data;
@@ -57,7 +57,7 @@ export const createSpecial = async (data) => {
     try {
       const response = await axiosConfig({
         method: "PUT",
-        url: `/api/specials/${id}`,
+        url: `/api/specializations/${id}`,
         data: data,
       });
       
@@ -76,3 +76,62 @@ export const createSpecial = async (data) => {
       } else {
         // Có điều gì đó đã xảy ra khi thiết lập
       }}};
+
+
+      export const updateDoctorProfileWithSpecialization = async (doctorId, specialId) => {
+        if (doctorId == null && specialId == null) {
+          throw new Error("Missing required fields");
+        }
+      
+        try {
+          const response = await axiosConfig({
+            method: "POST",
+            url: `/api/doctors/${doctorId}/specialization/${specialId}`,
+          });
+      
+          if (response.status === 200) {
+            return response.data;
+          }
+          throw new Error(response.data?.message || "Update failed");
+        } catch (error) {
+          if (error.response) {
+            //Yêu cầu đã được thực hiện và máy chủ phản hồi bằng mã trạng thái
+            //nằm ngoài phạm vi 2xx
+            throw new Error(error.response.data?.message || "Update failed");
+          } else if (error.request) {
+            // Yêu cầu đã được thực hiện nhưng không nhận được phản hồi
+            throw new Error("No response from server");
+          } else {
+            // Có điều gì đó đã xảy ra khi thiết lập
+          }
+        }
+      };
+      
+      export const getDoctorProfileWithSpecialization = async (doctorId) => {
+        if (doctorId == null) {
+          throw new Error("Missing required fields");
+        }
+      
+        try {
+          const response = await axiosConfig({
+            method: "GET",
+            url: `/api/doctors/${doctorId}/specialization`,
+          });
+      
+          if (response.status === 200) {
+            return response.data;
+          }
+          throw new Error(response.data?.message || "Update failed");
+        } catch (error) {
+          if (error.response) {
+            //Yêu cầu đã được thực hiện và máy chủ phản hồi bằng mã trạng thái
+            //nằm ngoài phạm vi 2xx
+            throw new Error(error.response.data?.message || "Update failed");
+          } else if (error.request) {
+            // Yêu cầu đã được thực hiện nhưng không nhận được phản hồi
+            throw new Error("No response from server");
+          } else {
+            // Có điều gì đó đã xảy ra khi thiết lập
+          }
+        }
+      };

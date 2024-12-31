@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Loader } from "lucide-react";
-import { useDispatch } from "react-redux";
+import {apiLogin as login } from "../../services/auth";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"; 
+import {jwtDecode} from "jwt-decode";
+import { ca } from "date-fns/locale/ca";
+
 
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -20,13 +24,32 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    dispatch({
-      type: "LOGIN_SUCCESS",
-      payload: { token: "example_token_123" }, // Dữ liệu bạn muốn lưu
-  });
-    alert("Form submitted successfully!");
-  };
+  const handleFormSubmit = async (data) => {
+    setIsLoading(true);
+    try{
+      const respone = await login(data);
+    if (respone) {
+      setIsLoading(false);
+      toast.success("Login successfully!");
+      const token = localStorage.getItem("token");
+      const decode = jwtDecode(token);
+      const role = decode.role;
+      if (role === "USER") {
+        navigate("/dashboard/user");
+      }
+      if (role === "ADMIN") {
+        navigate("/dashboard/admin");
+      }
+      if (role === "DOCTOR") {
+        navigate("/dashboard/doctor");
+      }
+    }}
+    catch(error){
+      setIsLoading(false);
+      toast.error("Login failed!");
+    }
+};
+
     return (
       <>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -42,7 +65,7 @@ export default function LoginForm() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                   Email address
@@ -142,7 +165,7 @@ export default function LoginForm() {
                 type="submit"
                 className="flex items-center w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                <Loader className="h-4 w-4 mr-2 flex-shrink-0 animate-spin"/> Sign In...
+                 Sign In...
               </button>
               ):(
                 <button

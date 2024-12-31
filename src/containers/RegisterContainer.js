@@ -32,7 +32,7 @@ const RegisterContainer = ({onSubmit, isLoading, error,isRegistered, user }) => 
     if (isRegistered) {
       toast.success("Đăng ký thành công!");
       if(role === "DOCTOR") {
-        navigate(`/onboarding/${user.id}`, {
+        navigate(`/onboarding/${user.id}?page=bio-data`, {
           state: {
             user: user, 
           }

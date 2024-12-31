@@ -1,16 +1,15 @@
 import { useLocation, useParams } from 'react-router-dom';
 import DatePickerInput from '../../components/ui/DatePickerInput';
-
+import OnboardingSteps from "../../components/onboarding/OnboardingSteps"
 const OnboardingPage = () => {
   const location = useLocation();
-  const queryParam = new URLSearchParams(location.search);
-  const id = queryParam.get("id");
-
+  const user = location.state?.user;
+  const {id} = useParams();
   return (
     <div>
-      <h2>Welcom Doctor - {id}</h2>
-      {/* <OnboardingForm /> */}
-      <DatePickerInput />
+      <div className="max-w-full mx-auto p-8">
+          <OnboardingSteps id={id} user={user}/>
+      </div>
     </div>
   );
 };

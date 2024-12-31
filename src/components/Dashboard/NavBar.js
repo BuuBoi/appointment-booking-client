@@ -1,9 +1,12 @@
 import React from "react";
 import { Avatar, Dropdown } from "flowbite-react";
 import { AlignJustify, Bell, Mail, Search } from "lucide-react";
+import { useUserProfile } from "../../context/userProfileContext";
 
 //Nhung component trong folder Dashboard nay se duoc su dung trong DashboardPage va layout cua Dashboard
 export default function NavBar() {
+    const {userProfile} = useUserProfile();
+
     return (
       <header className="bg-white border-b border-gray-200">
         <div className="px-4 mx-auto">
@@ -90,10 +93,10 @@ export default function NavBar() {
                 }
               >
                 <Dropdown.Header>
-                  <span className="block text-sm">"Nguen Van A"</span>
+                  {/* <span className="block text-sm">"Nguen Van A"</span>
                   <span className="block truncate text-sm font-medium">
-                    "aaaa@gamil.com"
-                  </span>
+                    {userProfile.email}
+                  </span> */}
                 </Dropdown.Header>
                 <Dropdown.Item>Dashboard</Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>

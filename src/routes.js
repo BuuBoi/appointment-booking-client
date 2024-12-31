@@ -26,6 +26,7 @@ import UpdateSpecialPage from "./pages/dashboard/UpdateSpecialPage";
 import SymptomPage from "./pages/dashboard/SymptomPage";
 import CreateSymptomPage from "./pages/dashboard/CreateSymptomPage";
 import UpdateSymptomPage from "./pages/dashboard/UpdateSymptomPage";
+import OnboardingContextProvider from "./context/context";
 const myRoutes = [
   {
     path: "/",
@@ -49,7 +50,13 @@ const myRoutes = [
   },
   {
     path: "/onboarding/:id",
-    main: () => <OnboardingPage />, // Home component
+    main: () => (
+      <FrontendLayout>
+        <OnboardingContextProvider>
+          <OnboardingPage />
+        </OnboardingContextProvider>
+      </FrontendLayout>
+    ),
   },
   {
     path: "/join/doctor",
@@ -103,7 +110,7 @@ const myRoutes = [
     path: "/dashboard/admin",
     main: () => <BackendLayout />,
     routeChild: [
-      { path: "", main: () => <DashboarPage /> },
+      { path: "", main: () => <DashboarPage /> }, // phai chia them dashboard cho tung role
 
       { path: "settings", main: () => <SettingPage /> },
 

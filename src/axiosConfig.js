@@ -1,17 +1,17 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    //baseURL: 'http://localhost:8080/DoctorCare'
-    baseURL: "https://67673c8e560fbd14f18d47bb.mockapi.io"
+    baseURL: 'http://localhost:8080/DoctorCare'
+    
 });
 
 instance.interceptors.request.use(function(config) {
-    //do something before request is sent
-    // const token = localStorage.getItem('persist:auth'); ==> tam thoi vo hieu hoa token
-    // console.log(token);
-    // if (token) {
-    //     config.headers.Authorization = `Bearer ${token}`;
-    // }
+    // do something before request is sent
+    const token = localStorage.getItem('token'); 
+    console.log("Token being sent:", token);
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;}
 , function(error) {
     //do something with request error

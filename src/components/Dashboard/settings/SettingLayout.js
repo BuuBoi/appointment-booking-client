@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Settings } from "lucide-react";
 import AvailalibitySetting from "./AvailalibitySettings";
+import ServiceFormProps from "./ServiceFormProps";
 
 // interface SettingsTabProps {
 //   label: string;
@@ -27,8 +28,11 @@ const SettingsLayout = () => {
 
   const tabs = [
     { id: 1, label: "Availability" },
-    { id: 2, label: "Account Settings" },
+    { id: 2, label: "Services Settings" },
   ];
+  const onSubmit = (data) => {
+    console.log(data);
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -52,7 +56,7 @@ const SettingsLayout = () => {
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           {activeTab === 1 && <AvailalibitySetting />}
-          {activeTab === 2 && <div>Account Settings</div>}
+          {activeTab === 2 && <ServiceFormProps onSubmit={onSubmit}/>}
         </div>
       </div>
     </div>

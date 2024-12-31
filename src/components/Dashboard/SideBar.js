@@ -1,10 +1,14 @@
-import { Home, Settings, CalendarCheck, UserCog, Power } from "lucide-react";
+import { Home, Settings, CalendarCheck, UserCog, Power, Mail, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import { Button } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
+import { useUserProfile } from "../../context/userProfileContext";
 
-const Sidebar = ({ useRole }) => {
+const Sidebar = () => {
   const location = useLocation();
+  const { userProfile } = useUserProfile();
+  const useRole = userProfile?.role;
   const sideBarConfig = {
     doctor: [
       {
@@ -15,7 +19,7 @@ const Sidebar = ({ useRole }) => {
       {
         name: "Appointment",
         path: "/dashboard/doctor/appointment",
-        icons: Settings,
+        icons: CalendarCheck,
       },
       {
         name: "Settings",
@@ -23,14 +27,19 @@ const Sidebar = ({ useRole }) => {
         icons: Settings,
       },
       {
-        name: "Products",
-        path: "/dashboard/doctor/products",
-        icons: CalendarCheck,
-      },
-      {
         name: "Patients",
         path: "/dashboard/doctor/patients",
-        icons: CalendarCheck,
+        icons: User,
+      },
+      {
+        name: "Inbox",
+        path: "/dashboard/doctor/inbox",
+        icons: Mail,
+      },
+      {
+        name: "Tasks",
+        path: "/dashboard/doctor/tasks",
+        icons: User,
       },
     ],
     admin: [
@@ -76,12 +85,17 @@ const Sidebar = ({ useRole }) => {
       },
     ],
   };
-  const tabs = sideBarConfig[useRole];
+  const tabs = sideBarConfig[useRole?.toLowerCase()]||[];
   const isActivePath = (tabPath) => {
     // Check if the path is either an exact match or a nested route
     return location.pathname.startsWith(`${tabPath}`);
   };
-
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    // Redirect to login page
+    navigate('/login');
+  };
   return (
     <div className="hidden xl:flex xl:w-64 xl:flex-col border-r border-gray-300">
       <div className="flex flex-col pt-5 overflow-y-auto">
@@ -111,7 +125,7 @@ const Sidebar = ({ useRole }) => {
         
       </div>
       <div className="mt-auto p-4 ">
-          <Button size="sm" className="w-full">
+          <Button size="sm" className="w-full" onClick={handleLogout}>
             <Power className="w-4 h-4 mr-2" />
             Logout
           </Button>

@@ -1,42 +1,43 @@
 import React from 'react';
 import { StatCard } from './StatCard';
 import { DollarIcon, UsersIcon, CartIcon, ActivityIcon } from '../icons';
+import { Calendar, ListOrdered, User } from 'lucide-react';
 
-export const StatsGrid= () => {
-  const stats = [
+export const StatsGrid= ({stats}) => {
+  const statsData = [
     {
-      title: 'Total Revenue',
-      value: '$45,231.89',
+      title: 'Doctors',
+      value: stats.doctors,
       change: '+20.1%',
       timeFrame: 'last month',
-      icon: <DollarIcon />
+      icon: <UsersIcon />
     },
     {
-      title: 'Subscriptions',
-      value: '+2350',
+      title: 'Patients',
+      value: stats.patients,
       change: '+180.1%',
       timeFrame: 'last month',
       icon: <UsersIcon />
     },
     {
-      title: 'Sales',
-      value: '+12,234',
+      title: 'Appointments',
+      value: stats.appointments,
       change: '+19%',
       timeFrame: 'last month',
-      icon: <CartIcon />
+      icon: <Calendar />
     },
     {
-      title: 'Active Now',
-      value: '+573',
+      title: 'Services',
+      value: stats.services,
       change: '+201',
       timeFrame: 'last hour',
-      icon: <ActivityIcon />
+      icon: <ListOrdered />
     }
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-      {stats.map((stat, index) => (
+      {statsData.map((stat, index) => (
         <StatCard key={index} {...stat} />
       ))}
     </div>
