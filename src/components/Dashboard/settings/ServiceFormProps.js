@@ -18,11 +18,11 @@ export default function ServiceFormProps() {
   const navigate = useNavigate();
   const [servicesOption, setServicesOption] = useState([]);
   const [specialtyOption, setSpecialtyOption] = useState([]);
-  const [symptomsOption, setSymptomsOption] = useState([]);
+
 
   const [selectedServiceId, setSelectedServiceId] = useState();
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState();
-  const [selectedSymptomsId, setSelectedSymptomsId] = useState([]);
+
   console.log(selectedServiceId);
   console.log(selectedSpecialtyId);
 
@@ -176,7 +176,7 @@ export default function ServiceFormProps() {
             onChange={setSelectedSymptomsId}
             labelledBy="Select"
           /> */}
-            <div className="grid grid-cols-4 gap-2">
+            {/* <div className="grid grid-cols-4 gap-2">
               {symptomsOption.map((service) => (
                 <div
                   key={service.id}
@@ -188,7 +188,7 @@ export default function ServiceFormProps() {
                   <p>{service.title}</p>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

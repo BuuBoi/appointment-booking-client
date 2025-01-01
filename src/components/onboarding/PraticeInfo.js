@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { updateDoctor } from "../../services/doctorProfile";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function PracticeInfo({ page, id, nextPage, formId }) {
   const navigate = useNavigate();
