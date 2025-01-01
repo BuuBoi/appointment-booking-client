@@ -14,6 +14,7 @@ export default function PracticeInfo({ page, id, nextPage, formId }) {
     hospitalEmailAddress: "",
     hospitalWebsite: "",
   });
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -55,6 +56,7 @@ export default function PracticeInfo({ page, id, nextPage, formId }) {
         const res = await updateDoctor(formId, data);
         if (res) {
           toast.success("Pratice Information saved successfully");
+          setIsCompleted(true);
           console.log("Data Practice affter Response: ", res); // Log dữ liệu
         }else{
           toast.error("Profile Information not saved");
@@ -115,13 +117,15 @@ export default function PracticeInfo({ page, id, nextPage, formId }) {
       </div>
 
       <div className="flex justify-center mt-4 items-center ">
-        <button
+        {!isCompleted ? (<button
           type="submit"
           onClick={(e) => handleSubmit(e)}
           className="flex items-center w-80 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Save and Continue
-        </button>
+        </button>):(<Link to="/login" className="flex items-center w-80 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          Complete
+        </Link>)}
       </div>
     </div>
   );

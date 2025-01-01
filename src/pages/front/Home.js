@@ -3,7 +3,7 @@ import Hero from "../../components/Hero";
 import MegaMenu from "../../components/MegaMenu";
 import TabbedSection from "../../components/TabbedSection";
 import DoctorList from "../../components/DoctorList";
-class Home extends Component {
+function Home() {
   // getDoctors = async () => {
   //   try {
   //     const response = await getAllDoctors();
@@ -14,7 +14,7 @@ class Home extends Component {
   // };
   // telehealthDoctors = response.filter((doctor) => doctor.isTelehealth);
   // inPersonDoctors = response.filter((doctor) => doctor.isInPerson);
-  render() {
+ 
     return (
       <div>
         {/* Hero Section */}
@@ -26,5 +26,4 @@ class Home extends Component {
       </div>
     );
   }
-}
 export default Home;

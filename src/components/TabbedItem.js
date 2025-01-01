@@ -6,34 +6,20 @@ import { Stethoscope, Microscope, Activity, Syringe } from "lucide-react";
 import ServiceList from "./Services/ServiceList";
 import LinkCards from "./Doctors/LinkCards";
 
-export default function TabbedItem() {
-  const Service = [
-    { title: "Teleheath", image: "/doctor.jpg", slug: "telehealth" },
-    { title: "Video Prescription", image: "/doctor.jpg", slug: "telehealth" },
-    { title: "Mental health", image: "/doctor.jpg", slug: "telehealth" },
-    { title: "ED Consult", image: "/doctor.jpg", slug: "telehealth" },
-    { title: "Urgent care", image: "/doctor.jpg", slug: "telehealth" },
-    { title: "Urgent care", image: "/doctor.jpg", slug: "telehealth" },
-    { title: "Urgent care", image: "/doctor.jpg", slug: "telehealth" },
-  ];
+export default function TabbedItem({services, specialties}) {
+
   const tabs = [
     {
       title: "Popular Services",
       content: "Nội dung dịch vụ phổ biến",
       icon: Stethoscope, // Định dạng icon đúng
-      component: <ServiceList services={Service} />,
-    },
-    {
-      title: "Doctors",
-      content: "Danh sách bác sĩ",
-      icon: Microscope,
-      component: <LinkCards className="bg-black" />,
+      component: <ServiceList services={services} />,
     },
     {
       title: "Specialists",
       content: "Các chuyên gia",
       icon: Activity,
-      component: <LinkCards className="bg-blue-700" />,
+      component: <LinkCards className="bg-blue-700" specialties={specialties}/>,
     },
     {
       title: "Symptoms",
