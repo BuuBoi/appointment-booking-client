@@ -22,8 +22,6 @@ export default function DayScheduleDisplay({slots, day, onUpdateSlots }) {
     const newSlots = slots.filter(s => s !== slot);
     onUpdateSlots(day, newSlots);
   };
-  console.log("trong display component",day);
-  console.log(slots);
     return (
         <div className="mt-4">
           <h3 className="text-lg font-semibold mb-4">

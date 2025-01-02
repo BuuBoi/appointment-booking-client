@@ -1,25 +1,16 @@
-import React, { Component, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../../components/Hero";
 import MegaMenu from "../../components/MegaMenu";
 import TabbedSection from "../../components/TabbedSection";
+import { getAllDoctors } from "../../services/doctorProfile";
 import DoctorList from "../../components/DoctorList";
 function Home() {
-  // getDoctors = async () => {
-  //   try {
-  //     const response = await getAllDoctors();
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-  // telehealthDoctors = response.filter((doctor) => doctor.isTelehealth);
-  // inPersonDoctors = response.filter((doctor) => doctor.isInPerson);
-  const [DoctorList, setDoctorList] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await getAllDoctors();
-        setDoctorList(response.data);
+        setDoctors(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -27,15 +18,18 @@ function Home() {
     fetchData();
   }, []);
 
-  console.log(DoctorList);
+  console.log(doctors);
+  // chia lam hai mode doctor
+  // telehealthDoctors = response.filter((doctor) => doctor.isTelehealth); 
+  // inPersonDoctors = response.filter((doctor) => doctor.isInPerson);
   return (
     <div>
       {/* Hero Section */}
 
       <Hero />
       <TabbedSection />
-      <DoctorList />
-      <DoctorList title="Home Doctor Visit" isInPerson={true} />
+      <DoctorList doctors={doctors}/>
+      <DoctorList title="Home Doctor Visit" isInPerson={true} doctors={doctors}/>
     </div>
   );
 }

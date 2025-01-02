@@ -28,7 +28,6 @@ export function Calendar({ selectedDate, onDateSelect }) {
 
   const handleDateClick = (date) => {
     onDateSelect?.(date);
-    console.log(date);
   };
 
   return (

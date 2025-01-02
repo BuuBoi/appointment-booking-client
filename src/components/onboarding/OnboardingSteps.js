@@ -6,6 +6,7 @@ import ProfessionInfo from "./ProfessionInfo";
 import ProfileInfo from "./ProfileInfo";
 import PracticeInfo from "./PraticeInfo";
 import { useOnboardingContext } from "../../context/context";
+//https://bolt.new/~/sb1-z95zeap5
 
 export default function OnboardingSteps({ id, user }) {
   const location = useLocation();

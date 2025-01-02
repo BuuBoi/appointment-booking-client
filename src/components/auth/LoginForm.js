@@ -5,7 +5,6 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; 
 import {jwtDecode} from "jwt-decode";
-import { ca } from "date-fns/locale/ca";
 
 
 

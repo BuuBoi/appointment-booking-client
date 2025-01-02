@@ -12,7 +12,7 @@ export default function DatePickerInput({date, setDate}) {
           label="Chọn ngày"
           value={date} // date cua dayjs
           onChange={(newDate) => setDate(newDate)} // Truyền đối tượng Dayjs
-          className='w-full'	
+          className='w-full'
         />
       </div>
     </LocalizationProvider>

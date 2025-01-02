@@ -205,7 +205,44 @@ const myRoutes = [
       { path: "products/update", main: () => <EditProduct /> },
     ],
   },
-
+  //dash for doctor
+  {
+    path: "/dashboard/user",
+    main: () => <BackendLayout />,
+    routeChild: [
+      { path: "", main: () => <DashboarPage /> },
+      { path: "settings", main: () => <SettingPage /> },
+      {
+        path: "appointment",
+        main: () => (
+          <div className="min-h-screen p-5 w-full">
+            <div className=" mx-auto space-y-6">
+              <AppointmentPage />
+            </div>
+          </div>
+        ),
+        routeChild: [
+          {
+            path: "view/:id",
+            main: () => <div className="h-50 w-50 bg-blue-500">View</div>,
+          },
+        ],
+      },
+      {
+        path: "products",
+        main: () => (
+          <div className="min-h-screen p-10 w-full">
+            <div className=" mx-auto space-y-6">
+              <ProductPage />
+              {/* <Outlet/> */}
+            </div>
+          </div>
+        ),
+      },
+      { path: "products/update", main: () => <EditProduct /> },
+    ],
+  },
+  
   {
     path: "/login",
     main: () => (

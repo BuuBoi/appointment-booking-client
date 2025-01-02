@@ -30,9 +30,6 @@ const SettingsLayout = () => {
     { id: 1, label: "Availability" },
     { id: 2, label: "Services Settings" },
   ];
-  const onSubmit = (data) => {
-    console.log(data);
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -56,7 +53,7 @@ const SettingsLayout = () => {
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           {activeTab === 1 && <AvailalibitySetting />}
-          {activeTab === 2 && <ServiceFormProps onSubmit={onSubmit}/>}
+          {activeTab === 2 && <ServiceFormProps/>}
         </div>
       </div>
     </div>
