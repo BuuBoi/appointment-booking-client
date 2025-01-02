@@ -1,3 +1,4 @@
+import axiosConfig from "../axiosConfig"
 export const createAppointment = async (data) => {
     try {
       const response = await axiosConfig({
@@ -22,5 +23,20 @@ export const createAppointment = async (data) => {
         // Có điều gì đó đã xảy ra khi thiết lập yêu cầu gây ra Lỗi
         throw new Error("Error setting up the request");
       }
+    }
+  };
+
+  export const getAppointmentByDoctorId = async (id) => {
+    try {
+      const response = await axiosConfig({
+        method: "GET",
+        url: `/api/appointments/doctor/${id}`,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error(response.data?.message || "Get profile failed");
+    } catch (error) {
+      throw new Error("Get profile failed");
     }
   };

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Available from "./Available";
 import BookingForm from "./BookingForm";
-import { createAppointment } from "../services/appoinment";
+import { createAppointment } from "../services/appointment";
 
 export default function DoctorDetail({ doctor }) {
   const [isAcitve, setIsActive] = useState("available");
@@ -18,7 +18,8 @@ export default function DoctorDetail({ doctor }) {
     setUserId(id);
     setStep(2);
   };
-  const handleSubmit = async (formData) => { {/*  Lay duoc data truyen ra bang su kien onSubmit */}
+
+  const handleSubmit = async (formData) => {
     const dataAppointment = {
       ...formData,
       userId: userId,
@@ -28,7 +29,7 @@ export default function DoctorDetail({ doctor }) {
       appointmentTime: selectedTime,
       appointmentCreatedDate: new Date(),
     };
-    console.log('Form submitted:', dataAppointment);
+    console.log("Form submitted:", dataAppointment);
     // Handle form submission here
     try {
       const response = await createAppointment(dataAppointment);
@@ -36,6 +37,7 @@ export default function DoctorDetail({ doctor }) {
       return response;
     } catch (error) {
       console.log("Error creating appointment", error);
+    }
   };
   return (
     <>
@@ -73,13 +75,9 @@ export default function DoctorDetail({ doctor }) {
         </div>
       ) : (
         <div className="p-8">
-        <BookingForm 
-          onPrevious={() => setStep(1)}
-          onSubmit={handleSubmit}
-        />
-      </div>
+          <BookingForm onPrevious={() => setStep(1)} onSubmit={handleSubmit} />
+        </div>
       )}
     </>
   );
-}
 }

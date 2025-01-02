@@ -10,6 +10,28 @@ const Sidebar = () => {
   const { userProfile } = useUserProfile();
   const useRole = userProfile?.role;
   const sideBarConfig = {
+    user: [
+      {
+        name: "Dashboard",
+        path: "/dashboard/user",
+        icons: Home,
+      },
+      {
+        name: "Appointment",
+        path: "/dashboard/user/appointment",
+        icons: CalendarCheck,
+      },
+      {
+        name: "Settings",
+        path: "/dashboard/user/settings",
+        icons: Settings,
+      },
+      {
+        name: "Inbox",
+        path: "/dashboard/user/inbox",
+        icons: Mail,
+      },
+    ],
     doctor: [
       {
         name: "Dashboard",
