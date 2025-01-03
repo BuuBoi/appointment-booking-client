@@ -22,15 +22,16 @@ export default function AppointmentPage() {
     fetchData();
   }, [doctorId]);
 
-
   return (
     <div>
-        <PanelHeader />
-        <div className='grid grid-cols-2'>
-            <div>
+        <PanelHeader appointments={appointments.length}/>
+        <div className='grid grid-cols-5'>
+            <div className='col-span-2'>
                 <ListPanel appointments={appointments}/>
             </div>
+            <div className='col-span-3 w-full h-full bg-white rounded-xl shadow-lg overflow-hidden'>
             <Outlet />
+            </div>
         </div>
     </div>
   )

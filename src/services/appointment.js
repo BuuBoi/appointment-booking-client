@@ -40,3 +40,34 @@ export const createAppointment = async (data) => {
       throw new Error("Get profile failed");
     }
   };
+
+  export const getAppointmentById = async (id) => {
+    try {
+      const response = await axiosConfig({
+        method: "GET",
+        url: `/api/appointments/${id}`,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error(response.data?.message || "Get profile failed");
+    } catch (error) {
+      throw new Error("Get profile failed");
+    }
+  };
+
+  export const updateAppointment = async (id, data) => {
+    try {
+      const response = await axiosConfig({
+        method: "PUT",
+        url: `/api/appointments/${id}`,
+        data: data,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error(response.data?.message || "Update profile failed");
+    } catch (error) {
+      throw new Error("Update profile failed");
+    }
+  }

@@ -27,6 +27,7 @@ import SymptomPage from "./pages/dashboard/SymptomPage";
 import CreateSymptomPage from "./pages/dashboard/CreateSymptomPage";
 import UpdateSymptomPage from "./pages/dashboard/UpdateSymptomPage";
 import OnboardingContextProvider from "./context/context";
+import ViewAppointmentPage from "./pages/dashboard/ViewAppointmentPage";
 const myRoutes = [
   {
     path: "/",
@@ -86,7 +87,7 @@ const myRoutes = [
         routeChild: [
           {
             path: "view/:id",
-            main: () => <div className="h-50 w-50 bg-blue-500">View</div>,
+            main: () => <ViewAppointmentPage />,
           },
         ],
       },
