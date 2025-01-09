@@ -8,13 +8,15 @@ import { Upload } from "lucide-react";
 import uploadImage from "../../utils/uploadImage";
 import { updateDoctor } from "../../services/doctorProfile";
 import { useNavigate } from "react-router-dom";
+import { useDoctorForm } from "../../context/DoctorFormContext";
 
-export default function ProfessionInfo({ page, id, nextPage, formId }) {
+export default function ProfessionInfo({ page, id, nextPage, formId, basePath }) {
+  const { doctorData, updateDoctorData } = useDoctorForm();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    yearGraduation: dayjs(),
-    medicalSchool: "",
-    specialPrimary: "",
+    yearGraduation: doctorData?.yearGraduation ? dayjs(new Date(doctorData.yearGraduation)) : dayjs(),
+    medicalSchool: doctorData?.medicalSchool || "",
+    specialPrimary: doctorData?.specialPrimary || "",
   });
 
   const [image, setImage] = useState(null);
@@ -74,8 +76,9 @@ export default function ProfessionInfo({ page, id, nextPage, formId }) {
         const res = await updateDoctor(formId, data);
         if (res) {
           toast.success("Profession Information saved successfully");
+          updateDoctorData(res);
           console.log("Data ContactInfo affter Response: ", res); // Log dữ liệu
-          navigate(`/onboarding/${id}?page=${nextPage}`);
+          navigate(`${basePath}/${id}?page=${nextPage}`);
         }else{
           toast.error("Profile Information not saved");
         }

@@ -10,14 +10,15 @@ import { Link } from 'react-router-dom';
 // }
 
  const ServiceCard = ({ service}) => {
+  console.log(service);
   return (
     <div className="p-3 border-b hover:bg-gray-50 transition-colors">
       <Link to= {`view/${service.id}`} state={{ service }} className="flex items-center gap-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-            <img src={service.imageUrl} alt="profile" className="w-10 h-10 rounded-md" width = {512} height = {512}/>
-            {/* <Image src = {service.imageUrl} alt = "profile" className = "w-14 h-auto" width = {512} height = {512}/> */}
+            <img src={service.imageUrl} alt="profile" className="w-10 h-10 rounded-md object-cover" style={{ maxWidth: '100%', maxHeight: '100%' }} width = {512} height = {512}/>
+            
           </div>
           <div>
             <h3 className="font-medium text-gray-900">{service.title}</h3>

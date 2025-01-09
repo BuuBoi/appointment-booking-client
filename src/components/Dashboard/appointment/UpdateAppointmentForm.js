@@ -20,17 +20,17 @@ export default function UpdateAppointmentForm({appointment}) {
     {
       id: 'PENDING',
       name: 'PENDING',
-      icon: <Loader className="w-5 h-5 text-red-500" />,
+      icon: <Loader className="w-5 h-5 text-yellow-500" />,
     },
     {
       id: 'ACCEPTED',
       name: 'ACCEPTED',
-      icon: <CheckCheck lassName="w-5 h-5 text-blue-400" />,
+      icon: <CheckCheck className="w-5 h-5 text-blue-700" />,
     },
     {
       id: 'REJECTED',
       name: 'REJECTED',
-      icon: <X  lassName="w-5 h-5 text-blue-400" />,
+      icon: <X  className="w-5 h-5 text-red-600" />,
     },
   ];
   console.log(selectedPlatform);

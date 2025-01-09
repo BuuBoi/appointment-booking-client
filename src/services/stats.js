@@ -1,4 +1,6 @@
 import axiosConfig from "./../axiosConfig";
+import { getAllAppointment } from "./appointment";
+import { getAllDoctors } from "./doctorProfile";
 import * as Services from './service';
 import * as Specials from './special';
 
@@ -13,16 +15,17 @@ export async function getStats() {
     };
 
     try{
-        const [specials, services] = await Promise.all([
+        const [specials, services,doctors,appointments] = await Promise.all([
             Specials.getAllSpecial(),
-            Services.getAllService()
+            Services.getAllService(),
+            getAllDoctors(),
+            getAllAppointment()
         ]);
-        stats.services = services.length;
+    stats.services = services.length;
     stats.specials = specials.length;
-
-    stats.doctors = 0; // Thêm logic sau
-    stats.patients = 0; // Thêm logic sau
-    stats.appointments = 0; // Thêm logic sau
+    stats.doctors = doctors.data.length; 
+    stats.appointments = appointments.length; // Thêm logic sau
+    console.log(doctors);
     } catch (error) {
         console.error("Error fetching stats:", error);
       }

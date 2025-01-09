@@ -4,16 +4,18 @@ import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { updateDoctor } from "../../services/doctorProfile";
 import { useNavigate } from "react-router-dom";
+import { useDoctorForm } from "../../context/DoctorFormContext";
 
-export default function ProfileInfo({ page, id, nextPage, formId }) {
+export default function ProfileInfo({ page, id, nextPage, formId, basePath }) {
+  const { doctorData, updateDoctorData } = useDoctorForm();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    emailAddress: "",
-    phone: "",
-    city: "",
-    district: "",
-    ward: "",
-    street: "",
+    emailAddress: doctorData?.emailAddress || "",
+    phone: doctorData?.phone || "",
+    city: doctorData?.address?.province || "",
+    district: doctorData?.address?.district || "",
+    ward: doctorData?.address?.ward || "",
+    street: doctorData?.address?.details || "",
 
   });
 
@@ -45,10 +47,12 @@ export default function ProfileInfo({ page, id, nextPage, formId }) {
     };
     console.log("Data ContactInfo before Response: ", data); // Log dữ liệu
     const res = await updateDoctor(formId, data);
+    updateDoctorData(res);
     if (res) {
       toast.success("Profile Information saved successfully");
+
       console.log("Data ContactInfo affter Response: ", res); // Log dữ liệu
-      navigate(`/onboarding/${id}?page=${nextPage}`);
+      navigate(`${basePath}/${id}?page=${nextPage}`);
     }else{
       toast.error("Profile Information not saved");
     }

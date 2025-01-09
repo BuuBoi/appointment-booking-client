@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {forwardRef, useMemo} from "react";
 import SectionHeading from "./SectionHeading";
 import { Link } from "react-router-dom";
 import ToggleButton from "./ToggleButton";
@@ -11,11 +11,7 @@ import { Navigation } from "swiper/modules";
 import "./swiper-custom.css";
 
 
-export default function DoctorList({
-  title = "Telehealth visit",
-  isInPerson = false,
-  doctors = {doctors},
-}) {
+const DoctorList = ({ title, isInPerson, doctors }) =>  {
 
   // Hàm lấy tên ngày hiện tại
   const getDayName = () => {
@@ -32,18 +28,6 @@ export default function DoctorList({
     return daysOfWeek[today.getDay()];
   };
 
-    // Sắp xếp doctors với những bác sĩ có lịch hôm nay lên đầu
-  // const sortedDoctors = useMemo(() => { ko hop ly nua, chi can filter la du 
-  //   const today = getDayName(); 
-  //   return [...doctors].sort((a, b) => {
-  //     const aHasTimestamp = a.weeklyAvailables && a.weeklyAvailables[today]?.length > 0;
-  //     const bHasTimestamp = b.weeklyAvailables && b.weeklyAvailables[today]?.length > 0;
-  //     if (aHasTimestamp && !bHasTimestamp) return -1;
-  //     if (!aHasTimestamp && bHasTimestamp) return 1;
-  //     return 0;
-  //   });
-  // }, [doctors]); 
-  // Lọc ra các bác sĩ có lịch khám trong ngày
   const availableDoctors = useMemo(() => {
     const today = getDayName();
     return doctors.filter(doctor => 
@@ -51,10 +35,10 @@ export default function DoctorList({
     );
   }, [doctors]);
   return (
-    <div className="mt-14 pt-8 container mx-auto px-16 bg-gray-50">
+    <div className="mt-14 pt-8 container mx-auto px-16 bg-gray-50 min-h-screen">
       <SectionHeading title={title} />
       <div className="flex justify-between items-center w-full ">
-        <ToggleButton />
+        {/* <ToggleButton /> */}
         <Link
           to="#"
           className="text-blue-600 dark:text-blue-400 font-bold text-[16px] border-2 border-blue-600 dark:border-blue-400 px-4 py-2 rounded-lg"
@@ -80,4 +64,5 @@ export default function DoctorList({
       </div>
     </div>
   );
-}
+};
+export default DoctorList;

@@ -1,5 +1,6 @@
 import React from 'react'
 import RegisterForm from '../../components/auth/RegisterForm'
+import NavbarFront from '../../components/NavbarFront'
 
 export default function RegisterPage({onSubmit, isLoading, error, isRegistered}) {
   return (

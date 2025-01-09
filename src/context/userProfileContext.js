@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
-import { useContext } from "react";
 import { getProfile } from "../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 
 //tao context
 const UserConext = createContext();
@@ -15,32 +15,35 @@ export const useUserProfile = () => {
   }
   return context;
 };
-
 //tao provider
-export const UserProfileProvider = ({ children }) => {
+export const UserProfileProvider = ({ children , requireAuth = true}) => {
   const [userProfile, setUserProfile] = React.useState(null);
   const navigate = useNavigate();
-  const fetchProfile = async () => {
+  const fetchProfile = async (shouldRedirect = requireAuth) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        navigate("/login");
+        if (shouldRedirect) {
+        navigate("/login");}
         return;
       }
       const respone = await getProfile();
+
       setUserProfile(respone.data);
       console.log(respone.data);
     } catch (error) {
       console.error("Error fetching profile:", error);
       // Handle error - có thể token hết hạn
       localStorage.removeItem("token");
-      navigate("/login");
+      if (shouldRedirect) {
+      navigate("/login");}
     }
   };
   // Thêm useEffect để gọi fetchProfile khi mount
   useEffect(() => {
     fetchProfile();
   }, [navigate]);
+
   const value = {
     userProfile,
     setUserProfile,

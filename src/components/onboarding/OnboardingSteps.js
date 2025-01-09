@@ -5,40 +5,36 @@ import ContactInfo from "./ContactInfo";
 import ProfessionInfo from "./ProfessionInfo";
 import ProfileInfo from "./ProfileInfo";
 import PracticeInfo from "./PraticeInfo";
-import { useOnboardingContext } from "../../context/context";
+import { IdentificationIcon } from "@heroicons/react/24/outline";
+
 //https://bolt.new/~/sb1-z95zeap5
 
-export default function OnboardingSteps({ id, user }) {
+export default function OnboardingSteps({ id, user, basePath="/onboarding" }) {
   const location = useLocation();
   const queryParam = new URLSearchParams(location.search);
   const page = queryParam.get("page") ?? "bio-data";
   // const {truckingNumber, doctorProfileID} = useOnboardingContext()
-  const {truckingNumber,setTruckingNumber, doctorProfileID, setDoctorProfileID} = useOnboardingContext();
+  
   const steps = [
     {
       title: "Bio Data",
       page: "bio-data",
-      component: <BioDataForm page={page} id={id} nextPage= "contact-information" formId = {doctorProfileID}/>,
+      component: <BioDataForm page={page} id={id} nextPage= "contact-information" formId = {id} basePath={basePath}/>,
     },
-    // {
-    //   title: "Profile Information",
-    //   page: "profile-information",
-    //   component: <ProfileInfo page={page} id={id} nextPage = "contact-information" formId = {doctorProfileID}/>,
-    // },
     {
       title: "Contact Information",
       page: "contact-information",
-      component: <ContactInfo page={page} id={id} nextPage = "professional-information" formId = {doctorProfileID} />,
+      component: <ContactInfo page={page} id={id} nextPage = "professional-information" formId = {id} basePath={basePath} />,
     },
     {
       title: "Professional Information",
       page: "professional-information",
-      component: <ProfessionInfo page={page} id={id}  nextPage ="practice-information" formId = {doctorProfileID}/>,
+      component: <ProfessionInfo page={page} id={id}  nextPage ="practice-information" formId = {id} basePath={basePath}/>,
     },
     {
       title: "Practice Information",
       page: "practice-information",
-      component: <PracticeInfo page={page} id={id} formId = {doctorProfileID} />,
+      component: <PracticeInfo page={page} id={id} formId = {id} basePath={basePath}/>,
     },
   ];
   const currentStep = steps.find((step) => step.page === page);
@@ -46,10 +42,30 @@ export default function OnboardingSteps({ id, user }) {
     <div className="grid grid-cols-12 mx-auto rounded-lg shadow-lg overflow-hidden border border-slate-200 min-h-screen">
       <div className="col-span-3 bg-slate-300">
         {steps.map((step, index) => {
+          const isCurrentPath = location.pathname.startsWith("/dashboard/doctor");
+
+            // If we're in the dashboard path, don't make the steps clickable
+          if (isCurrentPath) {
+            return (
+              <Link
+                key={index}
+                to={`${basePath}/${id}?page=${step.page}`}
+                className={
+                  step.page === page
+                    ? "block text-xs uppercase p-3 bg-teal-800 text-slate-100 shadow-inner"
+                    : "block text-xs uppercase p-3 bg-slate-200 text-black shadow-inner"
+                }
+              >
+                {step.title}
+              </Link>
+            );
+          }
+
+          // Otherwise, keep the original Link behavior
           return (
             <Link
               key={index}
-              to={`/onboarding/${id}?page=${step.page}`}
+              to={`${basePath}/${id}?page=${step.page}`}
               className={
                 step.page === page
                   ? "block text-xs uppercase p-3 bg-teal-800 text-slate-100 shadow-inner"
@@ -62,7 +78,6 @@ export default function OnboardingSteps({ id, user }) {
         })}
       </div>
       <div className="col-span-9 p-4">
-        {truckingNumber&&  <p className="border-b border-gray-200 text-teal-400">Use this Trucking Number:( <span className="font-bold">{truckingNumber}</span> )to Resume Application or check Status</p>}
         {currentStep.component}
       </div>
     </div>

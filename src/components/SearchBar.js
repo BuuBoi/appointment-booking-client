@@ -1,6 +1,13 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';   
 const SearchBar = () => {
+    const [searchInput, setSearchInput] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    navigate(`/doctors?query=${searchInput}`);
+  };
     return (
         <div style={{
             display: 'flex',
@@ -22,7 +29,7 @@ const SearchBar = () => {
             {/* Input */}
             <input
                 type="text"
-                placeholder="Search Mockups, Logos..."
+                placeholder="Search doctor..."
                 style={{
                     flex: 1,
                     backgroundColor: 'transparent',
@@ -31,17 +38,20 @@ const SearchBar = () => {
                     color: '#fff',
                     fontSize: '16px',
                 }}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
             />
             {/* Button */}
             <button style={{
                 backgroundColor: '#007BFF', // Màu xanh của nút
                 color: '#fff',
                 border: 'none',
-                borderRadius: '5px',
+                borderRadius: "180px",
                 padding: '8px 16px',
                 fontSize: '16px',
                 cursor: 'pointer',
-            }}>
+            }}
+            onClick={handleSearch}>
                 Search
             </button>
         </div>

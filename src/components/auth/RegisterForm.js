@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Loader } from "lucide-react";
+import { Loader, Microscope } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 
@@ -55,17 +55,23 @@ export default function RegiterForm({
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+          {/* <img
             alt="Your Company"
             src="./medical-logo.png"
             className="mx-auto h-[120px] w-[100px]"
-          />
-          <h2 className="mt-1 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+          /> */}
+          <div className="flex items-center justify-center text-blue-500">
+          <Microscope className="h-10 w-10"/>
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            FamilyDoc
+            </span>
+          </div>
+          <h2 className="mt-5 text-center text-xl font-semibold tracking-tight text-gray-900">
             Create new account
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
             <div>
               <label

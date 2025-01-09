@@ -54,6 +54,7 @@ export const getAllService = async () => {
 };
 
 export const updateService = async (id, data) => {
+  console.log("Data: ", data);
   try {
     const response = await axiosConfig({
       method: "PUT",

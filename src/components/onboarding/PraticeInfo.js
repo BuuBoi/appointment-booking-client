@@ -5,15 +5,17 @@ import { useState } from "react";
 import { updateDoctor } from "../../services/doctorProfile";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import  { useDoctorForm } from "../../context/DoctorFormContext";
 
-export default function PracticeInfo({ page, id, nextPage, formId }) {
+export default function PracticeInfo({ page, id, nextPage, formId, basePath }) {
+  const { doctorData, updateDoctorData } = useDoctorForm();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    hospitalName: "",
-    hospitalAddress: "",
-    hospitalContactNumber: "",
-    hospitalEmailAddress: "",
-    hospitalWebsite: "",
+    hospitalName: doctorData?.hospitalName || "",
+    hospitalAddress: doctorData?.hospitalAddress || "",
+    hospitalContactNumber: doctorData?.hospitalContactNumber || "",
+    hospitalEmailAddress: doctorData?.hospitalEmailAddress || "",
+    hospitalWebsite: doctorData?.hospitalWebsite || "",
   });
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -57,6 +59,7 @@ export default function PracticeInfo({ page, id, nextPage, formId }) {
         const res = await updateDoctor(formId, data);
         if (res) {
           toast.success("Pratice Information saved successfully");
+          updateDoctorData(res);
           setIsCompleted(true);
           console.log("Data Practice affter Response: ", res); // Log dữ liệu
         }else{

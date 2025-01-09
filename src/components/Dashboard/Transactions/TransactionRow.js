@@ -8,14 +8,15 @@ import React from 'react';
 //   amount: string;
 // }
 
-export const TransactionRow = ({ customer, amount }) => {
+export const TransactionRow = ({doctor}) => {
+  
   return (
-    <div className="flex justify-between items-center py-3 border-b border-gray-800">
+    <div className="flex justify-between items-center py-3 border-b ">
       <div className="space-y-1">
-        <p className="text-white">{customer.name}</p>
-        <p className="text-sm text-gray-400">{customer.email}</p>
+        <p className="text-black">{doctor.fullName}</p>
+        <p className="text-sm text-gray-400">{doctor.email}</p>
       </div>
-      <span className="text-white">{amount}</span>
+      {/* <span className="text-white">{amount}</span> */}
     </div>
   );
 };

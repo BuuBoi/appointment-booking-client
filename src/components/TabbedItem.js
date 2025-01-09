@@ -19,18 +19,12 @@ export default function TabbedItem({services, specialties}) {
       title: "Specialists",
       content: "Các chuyên gia",
       icon: Activity,
-      component: <LinkCards className="bg-blue-700" specialties={specialties}/>,
-    },
-    {
-      title: "Symptoms",
-      content: "Các triệu chứng",
-      icon: Syringe,
-      component: <LinkCards className="bg-purple-700" />,
+      component: <LinkCards className="text-black font-medium bg-slate-200 items-center py-1" specialties={specialties}/>,
     },
   ];
-
+  console.log("Specialties", specialties);  
   return (
-    <div className="overflow-x-auto">
+    <div className="">
       <Tabs aria-label="Default tabs" style={{ variant: "underline" }}>
         {tabs.map((tab, index) => (
           <Tabs.Item

@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"; 
 import {jwtDecode} from "jwt-decode";
+import { Microscope } from "lucide-react";
 
 
 
@@ -53,17 +54,23 @@ export default function LoginForm() {
       <>
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img
+            {/* <img
               alt="Your Company"
               src="./medical-logo.png"
               className="mx-auto h-[120px] w-[100px]"	
-            />
-            <h2 className="mt-1 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+            /> */}
+            <div className="flex items-center justify-center text-blue-600">
+          <Microscope className="h-10 w-10"/>
+            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            FamilyDoc
+            </span>
+          </div>
+            <h2 className="mt-5 text-center text-2xl/9 font-semibold tracking-tight text-gray-900">
               Sign in to your account
             </h2>
           </div>
   
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
             <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">

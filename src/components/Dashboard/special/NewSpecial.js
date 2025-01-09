@@ -23,7 +23,7 @@ export default function NewSpecial() {
       {/* Nút tạo cuộc hẹn mới */}
       <button
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium hover:bg-blue-600 transition"
-        onClick={() => navigate("/dashboard/admin/special/new")}
+        onClick={() => navigate("/dashboard/admin/specials/new")}
       >
         + New Special
       </button>

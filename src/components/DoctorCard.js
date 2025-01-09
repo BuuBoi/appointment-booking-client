@@ -55,7 +55,7 @@ export default function DoctorCard({ isInPerson = false, doctor }) {
         <div className="flex items-center gap-4 mt-auto">
           <div className="relative flex-shrink-0">
             <img
-              src={doctor.profilePicture}
+              src={doctor?.profilePicture|| 'https://via.placeholder.com/150'}
               alt="doctor"
               width={240}
               height={210}

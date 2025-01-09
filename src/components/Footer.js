@@ -71,14 +71,14 @@ export default function Footer() {
     return (
         <footer className="text-gray-500 bg-white px-4 py-5 max-w-screen-xl mx-auto md:px-8">
             <div className="gap-6 justify-between md:flex">
-                <div className="flex-1">
+                {/* <div className="flex-1">
                     <div className="max-w-xs">
                         <img src="https://www.floatui.com/logo.svg" className="w-32" />
                         <p className="leading-relaxed mt-2 text-[15px]">
                             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
                         </p>
                     </div>
-                </div>
+                </div> */}
                 <div className="flex-1 mt-10 space-y-6 items-center justify-between sm:flex md:space-y-0 md:mt-0">
                     {
                         footerNavs.map((item, idx) => (
@@ -107,7 +107,7 @@ export default function Footer() {
                     }
                 </div>
             </div>
-            <div className="mt-8 py-6 border-t items-center justify-between sm:flex">
+            {/* <div className="mt-8 py-6 border-t items-center justify-between sm:flex">
                 <div className="mt-4 sm:mt-0">
                     &copy; 2022 Float UI All rights reserved.
                 </div>
@@ -153,7 +153,7 @@ export default function Footer() {
                 .svg-icon rect {
                     fill: currentColor;
                 }
-            `}</style>
+            `}</style> */}
         </footer>
     )
 }

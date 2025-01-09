@@ -30,7 +30,7 @@ const TabbedSection = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-16 bg-gray-50">
+    <div className="container mx-auto px-16 bg-gray-50 min-h-screen">
       <header className="py-4">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">
           Top-rated online doctors & specialists available now.
@@ -41,7 +41,7 @@ const TabbedSection = () => {
         </p>
       </header>
       {/**  TABS */}
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl h-72">
         <TabbedItem services = {services} specialties={specialties}/>
       </div>
     </div>

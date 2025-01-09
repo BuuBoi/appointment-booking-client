@@ -1,4 +1,4 @@
-import { Home, Settings, CalendarCheck, UserCog, Power, Mail, User } from "lucide-react";
+import { Home, Settings, CalendarCheck, UserCog, Power, Mail, User, Rows2, Stethoscope, UserPen } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import { Button } from "flowbite-react";
@@ -9,6 +9,37 @@ const Sidebar = () => {
   const location = useLocation();
   const { userProfile } = useUserProfile();
   const useRole = userProfile?.role;
+
+ // Tạo config với dynamic path
+ const getDoctorTabs = (userId) => [
+  {
+    name: "Dashboard",
+    path: "/dashboard/doctor",
+    icons: Home,
+  },
+  {
+    name: "Appointment",
+    path: "/dashboard/doctor/appointment",
+    icons: CalendarCheck,
+  },
+  {
+    name: "Patients",
+    path: "/dashboard/doctor/patients",
+    icons: User,
+  },
+ 
+  {
+    name: "Onboarding",
+    path: `/dashboard/doctor/onboarding/${userId}`, // Dynamic path với userId
+    icons: UserPen,
+  },
+  {
+    name: "Settings",
+    path: "/dashboard/doctor/settings",
+    icons: Settings,
+  },
+];
+
   const sideBarConfig = {
     user: [
       {
@@ -26,44 +57,8 @@ const Sidebar = () => {
         path: "/dashboard/user/settings",
         icons: Settings,
       },
-      {
-        name: "Inbox",
-        path: "/dashboard/user/inbox",
-        icons: Mail,
-      },
     ],
-    doctor: [
-      {
-        name: "Dashboard",
-        path: "/dashboard/doctor",
-        icons: Home,
-      },
-      {
-        name: "Appointment",
-        path: "/dashboard/doctor/appointment",
-        icons: CalendarCheck,
-      },
-      {
-        name: "Settings",
-        path: "/dashboard/doctor/settings",
-        icons: Settings,
-      },
-      {
-        name: "Patients",
-        path: "/dashboard/doctor/patients",
-        icons: User,
-      },
-      {
-        name: "Inbox",
-        path: "/dashboard/doctor/inbox",
-        icons: Mail,
-      },
-      {
-        name: "Tasks",
-        path: "/dashboard/doctor/tasks",
-        icons: User,
-      },
-    ],
+    doctor: getDoctorTabs(userProfile?.id),
     admin: [
       {
         name: "Dashboard",
@@ -73,32 +68,27 @@ const Sidebar = () => {
       {
         name: "Services",
         path: "/dashboard/admin/services",
-        icons: Settings,
+        icons: Rows2,
       },
       {
         name: "Specials",
         path: "/dashboard/admin/specials",
-        icons: Settings,
-      },
-      {
-        name: "Symptoms",
-        path: "/dashboard/admin/symptoms",
-        icons: Settings,
+        icons: Stethoscope,
       },
       {
         name: "Appointment",
         path: "/dashboard/admin/appointment",
-        icons: Settings,
+        icons: CalendarCheck,
       },
       {
         name: "Doctors",
         path: "/dashboard/admin/doctors",
-        icons: UserCog,
+        icons: User,
       },
       {
         name: "Patients",
         path: "/dashboard/admin/patients",
-        icons: UserCog,
+        icons: User,
       },
       {
         name: "Settings",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef} from "react";
 import Hero from "../../components/Hero";
 import MegaMenu from "../../components/MegaMenu";
 import TabbedSection from "../../components/TabbedSection";
@@ -18,18 +18,16 @@ function Home() {
     fetchData();
   }, []);
 
-  console.log(doctors);
-  // chia lam hai mode doctor
-  // telehealthDoctors = response.filter((doctor) => doctor.isTelehealth); 
-  // inPersonDoctors = response.filter((doctor) => doctor.isInPerson);
+
   return (
     <div>
       {/* Hero Section */}
 
       <Hero />
       <TabbedSection />
-      <DoctorList doctors={doctors}/>
-      <DoctorList title="Home Doctor Visit" isInPerson={true} doctors={doctors}/>
+      <DoctorList  title="Home Doctor Visit" isInPerson={true} doctors={doctors}/>
+      {/* <DoctorList doctors={doctors}/> */}
+      
     </div>
   );
 }

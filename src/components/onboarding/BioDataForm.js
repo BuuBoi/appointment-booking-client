@@ -9,27 +9,28 @@ import { useState } from "react";
 import { Upload } from "lucide-react";
 import uploadImage from "../../utils/uploadImage";
 import { generateTruckingNumber } from "../../utils/generateTruckingNumber";
-import { createDoctor } from "../../services/doctorProfile";
+import { createDoctor, updateDoctor } from "../../services/doctorProfile";
 import { useNavigate } from "react-router-dom";
-import { useOnboardingContext } from "../../context/context";
+import { useDoctorForm } from "../../context/DoctorFormContext";
 
-export default function BioDataForm({ page, id, nextPage }) {
+export default function BioDataForm({ page, id, nextPage, basePath }) {
+  const { doctorData, updateDoctorData } = useDoctorForm();
   const navigate = useNavigate();
-  const {truckingNumber,setTruckingNumber, doctorProfileID, setDoctorProfileID} = useOnboardingContext();
-  console.log("Trucking Number: ", truckingNumber);
-  console.log("Doctor Profile ID: ", doctorProfileID);
+  
+  console.log("BioFormContext: ", doctorData);
   const [formData, setFormData] = useState({
-    dob: dayjs(),
-    fullName: "",
-    gender: "",
-    medicalLicense: "",
-    medicalLicenseExpiry: dayjs(),
-    bio: "",
-    yearsOfExperience: "",
+    dob: doctorData?.dateOfBirth ? dayjs(new Date(doctorData.dateOfBirth)) : dayjs(),
+    fullName: doctorData?.fullName||"",
+    gender: doctorData?.gender||"",
+    medicalLicense: doctorData?.medicalLicense||"",
+    medicalLicenseExpiry: doctorData?.medicalLicenseExpiry ? dayjs(new Date(doctorData.medicalLicenseExpiry)) : dayjs(),
+    bio: doctorData?.bio||"",
+    yearsOfExperience: doctorData?.yearsOfExperience||"",
   });
 
+
   const [image, setImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(doctorData?.profilePicture||"");
   const [uploading, setUploading] = useState(false);
 
   const handleChange = (field, value) => {
@@ -93,11 +94,10 @@ export default function BioDataForm({ page, id, nextPage }) {
       truckingNumber: generateTruckingNumber(), // Tạo mã số  
     };
     try{
-      const response = await createDoctor(data);
+      const response = await updateDoctor(id, data);
       toast.success("Doctor profile created successfully");
-      setTruckingNumber(response.truckingNumber);
-      setDoctorProfileID(response.id);
-      navigate(`/onboarding/${id}?page=${nextPage}`);
+      updateDoctorData(response);
+      navigate(`${basePath}/${id}?page=${nextPage}`);
       console.log("Response: ", response);
     }
     catch(error){

@@ -7,38 +7,42 @@ export const StatsGrid= ({stats}) => {
   const statsData = [
     {
       title: 'Doctors',
-      value: stats.doctors,
-      change: '+20.1%',
-      timeFrame: 'last month',
-      icon: <UsersIcon />
+      count: stats.doctors,
+      icon: <UsersIcon />,
+      href: '/dashboard/admin/doctors'
     },
-    {
-      title: 'Patients',
-      value: stats.patients,
-      change: '+180.1%',
-      timeFrame: 'last month',
-      icon: <UsersIcon />
-    },
+    // {
+    //   title: 'Patients',
+    //   value: stats.patients,
+    //   change: '+180.1%',
+    //   timeFrame: 'last month',
+    //   icon: <UsersIcon />
+    // },
     {
       title: 'Appointments',
-      value: stats.appointments,
-      change: '+19%',
-      timeFrame: 'last month',
-      icon: <Calendar />
+      count: stats.appointments,
+      icon: <Calendar />,
+      href: '/dashboard/admin/appointments'
     },
     {
       title: 'Services',
-      value: stats.services,
-      change: '+201',
-      timeFrame: 'last hour',
-      icon: <ListOrdered />
+      count: stats.services,
+      icon: <ListOrdered />,
+      href: '/dashboard/admin/services'
+    },
+    {
+      title: 'Special',
+      count: stats.specials,
+      icon: <ListOrdered />,
+      href: '/dashboard/admin/specials'
     }
+
   ];
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
       {statsData.map((stat, index) => (
-        <StatCard key={index} {...stat} />
+        <StatCard key={index} data={stat} />
       ))}
     </div>
   );

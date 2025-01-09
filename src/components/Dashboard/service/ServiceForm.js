@@ -7,46 +7,59 @@ import toast from "react-hot-toast";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+
 function ServiceForm({ initialData = null }) {
   const [title, setTitle] = useState("");
-  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
 
   const navigate = useNavigate();
-
   useEffect(() => {
     if (initialData) {
-      setTitle(initialData.title || "");
-      setPreviewUrl(initialData.imageUrl || null);
+      setTitle(initialData?.title || "");
+      setPreviewUrl(initialData?.imageUrl || null);
+      setImageUrl(initialData?.imageUrl || null);
     }
   }, [initialData]);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files?.[0];
     if (file) {
-      setImage(file);
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
+      try {
+        setUploading(true);
+        // Create a local preview
+        const localPreview = URL.createObjectURL(file);
+        setPreviewUrl(localPreview);
+  
+        // Upload to Cloudinary
+        const uploadedUrl = await uploadImage(file);
+        setImageUrl(uploadedUrl);
+      
+        // Clean up local preview
+        setPreviewUrl(uploadedUrl);
+        URL.revokeObjectURL(localPreview);
+      } catch (error) {
+        toast.error("Failed to upload image");
+        console.error("Upload error:", error);
+      } finally {
+        setUploading(false);
+      }
     }
   };
-
+console.log("imageUrl: ", imageUrl);
+console.log("previewUrl: ", previewUrl);
   const handleSubmit = async (event) => {
     event.preventDefault();
     setUploading(true);
-
-    let imageUrl = initialData?.imageUrl || null;
-
-    if (image) {
-      imageUrl = await uploadImage(image);
-      console.log("Image URL: ", imageUrl);
-    }
     const slug = generateSlug(title);
     const data = { ...initialData, title, imageUrl, slug };
+    console.log("Data: ", data);
     try {
       console.log("Payload: ", data);
       if(!initialData){
-        // Update service
+        // create service
         if(!title){
           toast.error("Title is required");
           return;
@@ -55,10 +68,10 @@ function ServiceForm({ initialData = null }) {
         if (response) {
           toast.success("Service created successfully");
           setTitle("");
-          setImage(null);
+          setImageUrl(null);
           setPreviewUrl(null);
-          navigate("/dashboard/admin/services");
-          window.location.reload();
+          // navigate("/dashboard/admin/services");
+          // window.location.reload();
         }
         console.log("Response: ", response);
       }
@@ -68,13 +81,14 @@ function ServiceForm({ initialData = null }) {
           return;
         }
         const response = await updateService(initialData.id, data);
+       
         if (response) {
           toast.success("Service created successfully");
           setTitle("");
-          setImage(null);
+          setImageUrl(null);
           setPreviewUrl(null);
-          navigate("/dashboard/admin/services");
-          window.location.reload();
+          // navigate("/dashboard/admin/services");
+          // window.location.reload();
         }
         console.log("Response: ", response);
       }

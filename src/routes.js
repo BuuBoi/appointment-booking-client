@@ -26,8 +26,18 @@ import UpdateSpecialPage from "./pages/dashboard/UpdateSpecialPage";
 import SymptomPage from "./pages/dashboard/SymptomPage";
 import CreateSymptomPage from "./pages/dashboard/CreateSymptomPage";
 import UpdateSymptomPage from "./pages/dashboard/UpdateSymptomPage";
-import OnboardingContextProvider from "./context/context";
+
 import ViewAppointmentPage from "./pages/dashboard/ViewAppointmentPage";
+import PatientPage from "./pages/dashboard/PatientPage";
+import ServiceDoctorPage from "./pages/front/ServiceDoctorPage";
+import SpecialDoctorpage from "./pages/front/SpecialDoctorPage";
+
+import { UserProfileProvider } from "./context/userProfileContext";
+import { DoctorFormProvider } from "./context/DoctorFormContext";
+import DoctorOfAdminPage from "./pages/dashboard/DoctorOfAdminPage";
+import PatientOfAdminPage from "./pages/dashboard/PatientOfAdminPage";
+import ViewDoctorOfAdmin from "./pages/dashboard/ViewDoctorOfAdmin";
+
 const myRoutes = [
   {
     path: "/",
@@ -35,7 +45,23 @@ const myRoutes = [
       <FrontendLayout>
         <Home />
       </FrontendLayout>
-    ), // Home component
+    ),
+  },
+  {
+    path: "/services/:slug",
+    main: () => (
+      <FrontendLayout>
+        <ServiceDoctorPage />
+      </FrontendLayout>
+    ),
+  },
+  {
+    path: "/specials/:slug",
+    main: () => (
+      <FrontendLayout>
+        <SpecialDoctorpage />
+      </FrontendLayout>
+    ),
   },
   {
     path: "/doctors/:id",
@@ -53,9 +79,9 @@ const myRoutes = [
     path: "/onboarding/:id",
     main: () => (
       <FrontendLayout>
-        <OnboardingContextProvider>
+        <DoctorFormProvider>
           <OnboardingPage />
-        </OnboardingContextProvider>
+        </DoctorFormProvider>{" "}
       </FrontendLayout>
     ),
   },
@@ -71,10 +97,21 @@ const myRoutes = [
   //dash for doctor
   {
     path: "/dashboard/doctor",
-    main: () => <BackendLayout />,
+    main: () => (
+      <UserProfileProvider>
+        <DoctorFormProvider>
+          <BackendLayout />
+        </DoctorFormProvider>
+      </UserProfileProvider>
+    ),
     routeChild: [
       { path: "", main: () => <DashboarPage /> },
+      {
+        path: "onboarding/:id",
+        main: () => <OnboardingPage />,
+      },
       { path: "settings", main: () => <SettingPage /> },
+      { path: "inboxs", main: () => <h1>Inboxs Page</h1> },
       {
         path: "appointment",
         main: () => (
@@ -91,6 +128,27 @@ const myRoutes = [
           },
         ],
       },
+      {
+        path: "patients",
+        main: () => (
+          <div className="min-h-screen p-5 w-full">
+            <div className=" mx-auto space-y-6">
+              <PatientPage />
+            </div>
+          </div>
+        ),
+        routeChild: [
+          {
+            path: "view/:id",
+            main: () => (
+              <div>
+                <h1>Patient Detail</h1>
+              </div>
+            ),
+          },
+        ],
+      },
+
       {
         path: "products",
         main: () => (
@@ -109,12 +167,47 @@ const myRoutes = [
   //dash for admin
   {
     path: "/dashboard/admin",
-    main: () => <BackendLayout />,
+    main: () => (
+      <UserProfileProvider>
+        <DoctorFormProvider>
+        <BackendLayout />
+        </DoctorFormProvider>
+      </UserProfileProvider>
+    ),
     routeChild: [
       { path: "", main: () => <DashboarPage /> }, // phai chia them dashboard cho tung role
 
       { path: "settings", main: () => <SettingPage /> },
-
+      { path: "patients", main: () => <div className="min-h-screen p-5 w-full">
+        <div className=" mx-auto space-y-6">
+          <PatientOfAdminPage />
+        </div>
+      </div>,
+       routeChild: [
+        {
+          path: "view/:id",
+          main: () => (
+            <div>
+              <h1>Patient Detail</h1>
+            </div>
+          ),
+        },
+      ], },
+      { path: "doctors", main: () => <div className="min-h-screen p-5 w-full">
+        <div className=" mx-auto space-y-6">
+          <DoctorOfAdminPage />
+        </div>
+      </div>,
+       routeChild: [
+        {
+          path: "view/:id",
+          main: () => (
+            <div>
+              <ViewDoctorOfAdmin />
+            </div>
+          ),
+        },
+      ], },
       {
         path: "services",
         main: () => (
@@ -132,7 +225,7 @@ const myRoutes = [
           {
             path: "view/:slug",
             main: () => <UpdateServicePage />,
-          }
+          },
         ],
       },
       {
@@ -152,27 +245,7 @@ const myRoutes = [
           {
             path: "view/:slug",
             main: () => <UpdateSpecialPage />,
-          }
-        ],
-      },
-      {
-        path: "symptoms",
-        main: () => (
-          <div className="min-h-screen p-5 w-full">
-            <div className=" mx-auto space-y-6">
-              <SymptomPage />
-            </div>
-          </div>
-        ),
-        routeChild: [
-          {
-            path: "new",
-            main: () => <CreateSymptomPage />,
           },
-          {
-            path: "view/:slug",
-            main: () => <UpdateSymptomPage />,
-          }
         ],
       },
 
@@ -192,24 +265,12 @@ const myRoutes = [
           },
         ],
       },
-      {
-        path: "products",
-        main: () => (
-          <div className="min-h-screen p-10 w-full">
-            <div className=" mx-auto space-y-6">
-              <ProductPage />
-              {/* <Outlet/> */}
-            </div>
-          </div>
-        ),
-      },
-      { path: "products/update", main: () => <EditProduct /> },
     ],
   },
-  //dash for doctor
+  //dash for user
   {
     path: "/dashboard/user",
-    main: () => <BackendLayout />,
+    main: () => <UserProfileProvider><DoctorFormProvider><BackendLayout /></DoctorFormProvider></UserProfileProvider>,
     routeChild: [
       { path: "", main: () => <DashboarPage /> },
       { path: "settings", main: () => <SettingPage /> },
@@ -243,7 +304,7 @@ const myRoutes = [
       { path: "products/update", main: () => <EditProduct /> },
     ],
   },
-  
+
   {
     path: "/login",
     main: () => (
@@ -255,7 +316,7 @@ const myRoutes = [
 
   {
     path: "/register",
-    main: () => <RegisterContainer />,
+    main: () => <FrontendLayout> <RegisterContainer /> </FrontendLayout>,
   },
 ];
 export default myRoutes;

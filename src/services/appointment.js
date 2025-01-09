@@ -71,3 +71,35 @@ export const createAppointment = async (data) => {
       throw new Error("Update profile failed");
     }
   }
+
+  export const getAppointmentByPatient= async (patientId) => {
+    try {
+      const response = await axiosConfig({
+        method: "GET",
+        url: `/api/appointments/patients/${patientId}`,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error(response.data?.message || "Get profile failed");
+    } catch (error) {
+      throw new Error("Get profile failed");
+    }
+  };
+
+  export const getAllAppointment= async () => {
+    try {
+      const response = await axiosConfig({
+        method: "GET",
+        url: `/api/appointments`,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error(response.data?.message || "Get profile failed");
+    } catch (error) {
+      throw new Error("Get profile failed");
+    }
+  };
+
+  
