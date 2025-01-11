@@ -174,3 +174,39 @@ export const getDoctorBySpecialSlug= async (slug) => {
     throw new Error("Get profile failed");
   }
 };
+
+
+function removeAccent(str) {
+  return str
+    .normalize("NFD") // Chuẩn hóa chuỗi
+    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ dấu
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D");
+}
+
+export const getDoctorsSearch= async (filters, currentPage, pageSize) => {
+  console.log(filters); 
+  console.log(currentPage);
+  console.log(pageSize);
+  const query = new URLSearchParams({
+    name: filters.name ? removeAccent(filters.name) : "",
+    specialization: filters?.specializationSlug || "",
+    service: filters?.serviceSlug || "",
+    address: filters.provinceName ? removeAccent(filters.provinceName) : "",
+    page: currentPage,
+    size: pageSize,
+  });
+  console.log(query.toString());
+  try {
+    const response = await axiosConfig({
+      method: "GET",
+      url: `/api/doctors/search?${query.toString()}`,
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error(response.data?.message || "Get profile failed");
+  } catch (error) {
+    throw new Error("Get profile failed");
+  }
+};

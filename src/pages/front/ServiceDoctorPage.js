@@ -13,7 +13,7 @@ export default function ServiceDoctorpage() {
   const title = slug.split("-").join(" ");
   const [searchParams] = useSearchParams();
   const page = searchParams.get("type");
-  console.log(services);
+  console.log("Render ServiceDoctorPage");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +33,7 @@ export default function ServiceDoctorpage() {
       }
     };
     fetchData();
+    
   }, [slug]);
   console.log(doctors);
   return (
@@ -40,7 +41,8 @@ export default function ServiceDoctorpage() {
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6 lg:gap-10">
         <div className="col-span-3 shadow border border-gray-200 p-6 rounded-sm">
           <div className="col-span-12 lg:col-span-3">
-            <ServiceSidebar services={services} currentSlug={slug} type="service" />
+            <ServiceSidebar services={services} currentSlug={slug} type="service" setIsSearching={() => console.log("Searching")} setCurrentPage={() => console.log("Current Page")} setFilters={() => console.log("Filters")} setTotalPages={() => console.log("Total Pages")} />
+              
           </div>
         </div>
         <div className="col-span-9">

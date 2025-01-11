@@ -23,7 +23,7 @@ const NavbarFront = () => {
 }}
   useEffect(() => {
     fetchProfile(false); // Không redirect nếu không fetch được dữ liệu
-  }, [fetchProfile]);
+  }, []);
   return (
     <div className="relative">
       <nav className="bg-slate-250 border-gray-200 dark:bg-gray-900">

@@ -1,14 +1,20 @@
-
 import React, { useState, useEffect } from "react";
-import {useParams, useSearchParams,useNavigate } from "react-router-dom";
-import {getDoctorBySpecialSlug} from "../../services/doctorProfile";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import {
+  getDoctorBySpecialSlug,
+  getAllDoctors,
+  getAllDoctorsSort,
+  getDoctorsSearch,
+} from "../../services/doctorProfile";
 import { DoctorList } from "../../components/doctorService/DoctorList";
 import { getAllSpecial } from "../../services/special";
-import  {ServiceSidebar}  from "../../components/doctorService/ServiceSidebar";
-import {DoctorSearchBar} from "../../components/doctorService/DoctorSearchBar";
+import { ServiceSidebar } from "../../components/doctorService/ServiceSidebar";
+import { DoctorSearchBar } from "../../components/doctorService/DoctorSearchBar";
 import { getAllService } from "../../services/service";
 import { se } from "date-fns/locale/se";
 import { is } from "date-fns/locale/is";
+import { Pagination } from "flowbite-react";
+import { set } from "date-fns/set";
 
 const provinces = [
   { id: 1, name: "Hà Nội" },
@@ -73,7 +79,7 @@ const provinces = [
   { id: 60, name: "Hậu Giang" },
   { id: 61, name: "Sóc Trăng" },
   { id: 62, name: "Bạc Liêu" },
-  { id: 63, name: "Cà Mau" }
+  { id: 63, name: "Cà Mau" },
 ];
 
 export default function SpecialDoctorpage() {
@@ -87,62 +93,79 @@ export default function SpecialDoctorpage() {
   const page = searchParams.get("type");
   const [Loading, setLoading] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+const [totalPages, setTotalPages] = useState(1);
+const [pageSize, setPageSize] = useState(8); // Số items mỗi trang
+const [filters, setFilters] = useState({specializationSlug: slug}); // Các bộ lọc
 
 
 
-  const handleSearch = (filters)=> {
-    console.log(filters);
+const onPageChange = (page) => setCurrentPage(page);
+
+
+  const handleSearch = async (filters) => {
     setIsSearching(true);
+    setFilters(filters);
+    console.log(filters);
     //fetch data
-    setDoctors([  {
-      id: "a14bbc12-dc27-4698-bf5c-12e1d54ef639",
-      fullName: "Bac Si Khong Nam Fake",
-      profilePicture: null,
-      address: {
-          province: "Da Nang",
-          district: "Lien Chieu",
-          ward: "Hoa Khanh Nam",
-          details: "33 h2/16 Nam Cao"
-      },
-      yearsOfExperience: 5,
-      specialization: "Tai Mui Hong",
-      hospitalName: "Da Khoa Da Nang"
-  },]);
-    setIsSearching(false);
-    if (!filters.specializationName?.trim()) {
+    try{
+      const response = await getDoctorsSearch( filters, currentPage, pageSize);
+      setDoctors(response.content);
+      setTotalPages(response.page.totalPages);
+    }catch(error){
+        console.log(error);
+     }
+
+    if (!filters.specializationSlug?.trim()) {
       return navigate(`/specials/all-doctors`);
     }
-    navigate(`/specials/${filters.specializationName}`);
-  }
+    navigate(`/specials/${filters.specializationSlug}`);
+  };
+  console.log(filters);
 
   useEffect(() => {
     const fetchData = async () => {
-      if(isSearching){
+      console.log(isSearching);
+      if (isSearching) {
+        console.log("Load useeffect 1");
         try {
-          const [ specialData, servicesData] = await Promise.all([
+          const [specialData, servicesData,doctorData] = await Promise.all([
             getAllSpecial(),
-            getAllService()
+            getAllService(),
+            getDoctorsSearch(filters, currentPage, pageSize),
           ]);
-  
+          console.log(doctorData);
+          if(doctorData){
+            console.log(doctorData.content);
+            setDoctors(doctorData?.content);
+            setTotalPages(doctorData?.page.totalPages);
+          }
           if (specialData) {
             setSpecials(specialData);
           }
           if (servicesData) {
             setServices(servicesData);
           }
+          
         } catch (error) {
           console.log(error, "Loi load data trong ServiceDoctorpage");
         }
-      }else{
+      } else {
+        console.log("Load useeffect 2");
         try {
           const [doctorsData, specialData, servicesData] = await Promise.all([
-            getDoctorBySpecialSlug(slug),
+            // slug === "all-doctors"
+            //   ? getDoctorsSearch(filters, currentPage, pageSize)
+            //   : getDoctorBySpecialSlug(slug),
+            getDoctorsSearch(filters, currentPage, pageSize),
             getAllSpecial(),
-            getAllService()
+            getAllService(),
           ]);
-  
+
           if (doctorsData) {
-            setDoctors(doctorsData);
+            console.log(doctorsData);
+            setDoctors(doctorsData.content);
+            setTotalPages(doctorsData.page.totalPages);
           }
           if (specialData) {
             setSpecials(specialData);
@@ -154,11 +177,15 @@ export default function SpecialDoctorpage() {
           console.log(error, "Loi load data trong ServiceDoctorpage");
         }
       }
-
     };
     fetchData();
-  }, []);
-  console.log(specials);
+    // setIsSearching(false);
+    console.log("ServiceDoctorPage useEffect");
+    return () => {
+      console.log("ServiceDoctorPage cleanup");
+    };
+  }, [slug, currentPage, isSearching]); 
+
   return (
     <div className="container py-8">
       <div className="mb-8 max-w-7xl mx-auto">
@@ -167,17 +194,27 @@ export default function SpecialDoctorpage() {
           specializations={specials}
           services={services} // Add your services data here
           provinces={provinces} // Add your provinces data here
-
         />
       </div>
       <div className="max-w-7xl mx-auto grid grid-cols-12 gap-6 lg:gap-10">
         <div className="col-span-3 shadow border border-gray-200 p-6 rounded-sm">
           <div className="col-span-12 lg:col-span-3">
-            <ServiceSidebar services={specials} currentSlug={slug} type="special" />
+            <ServiceSidebar
+              services={specials}
+              currentSlug={slug}
+              type="special"
+              setIsSearching={setIsSearching}
+              setCurrentPage={setCurrentPage}
+              setFilters={setFilters}
+              setTotalPages={setTotalPages}
+            />
           </div>
         </div>
         <div className="col-span-9">
           <DoctorList doctors={doctors} />
+          <div className="flex overflow-x-auto sm:justify-center">
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} showIcons />
+    </div>
         </div>
       </div>
     </div>
