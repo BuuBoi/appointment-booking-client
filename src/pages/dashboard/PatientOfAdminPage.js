@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 export default function PatientOfAdminPage() {
   const { userProfile } = useUserProfile();
   console.log(userProfile);
+  const role = userProfile?.role;
+  console.log(role);
   const [patinents, setPatients] = React.useState([]);
   
   useEffect(() => {

@@ -13,7 +13,7 @@ export const ServiceSidebar = ({ services, currentSlug, type, setIsSearching, se
     <div className="bg-white shadow border border-gray-200 p-6 rounded-lg">
       <h2 className="text-lg font-semibold flex items-center gap-2">
         <Stethoscope className="w-5 h-5 text-blue-600" />
-        {type === "service" ? "Dịch vụ khác" : "Chuyên khoa khoa khác"}
+        {type === "service" ? "Dịch vụ khác" : "Chuyên khoa khác"}
       </h2>
       <div className="mt-4 flex flex-col gap-2 max-h-[calc(100vh-200px)] overflow-y-auto">
       {type === "special" ? (<Link

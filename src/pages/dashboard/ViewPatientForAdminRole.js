@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { useUserProfile } from '../../context/userProfileContext'
 import { useParams } from 'react-router-dom';
-import { getAppointmentByDoctorIdAndPatientId } from '../../services/appointment';
+import { getAppointmentByPatient } from '../../services/appointment';
 import { formatDate, getTimeElapsed } from '../../utils/timeUtil';
 import { Calendar, CheckCheck, Clock, History, Loader, X } from 'lucide-react';
 
-export default function ViewPatientForDoctorRole() {
-    const { userProfile } = useUserProfile();
-    const doctorId = userProfile?.id;
+export default function ViewPatientForAdminRole() {
     const patientId = useParams().id;
     const [appointments, setAppointments] = useState([]);
 
@@ -18,14 +16,15 @@ export default function ViewPatientForDoctorRole() {
     useEffect(() => {
         const fetchAppointment = async () => {
             try {
-                const data = await getAppointmentByDoctorIdAndPatientId(doctorId, patientId);
+                const data = await getAppointmentByPatient(patientId);
+                console.log(data);
                 setAppointments(data);
             } catch (error) {
                 console.log(error);
             }
         }
         fetchAppointment();
-    }, [doctorId, patientId]);
+    }, [patientId]);
     console.log(appointments);
   return (
     <div className="appointments-list grid grid-cols-2 gap-4">

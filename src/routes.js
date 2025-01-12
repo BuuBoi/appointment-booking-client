@@ -39,6 +39,7 @@ import PatientOfAdminPage from "./pages/dashboard/PatientOfAdminPage";
 import ViewDoctorOfAdmin from "./pages/dashboard/ViewDoctorOfAdmin";
   import AppointmentPageRoleUser from "./pages/dashboard/AppointmentPageRoleUser";
 import ViewPatientForDoctorRole from "./pages/dashboard/ViewPatientForDoctorRole";
+import ViewPatientForAdminRole from "./pages/dashboard/ViewPatientForAdminRole";
 
 const myRoutes = [
   {
@@ -150,19 +151,6 @@ const myRoutes = [
           },
         ],
       },
-
-      {
-        path: "products",
-        main: () => (
-          <div className="min-h-screen p-10 w-full">
-            <div className=" mx-auto space-y-6">
-              <ProductPage />
-              {/* <Outlet/> */}
-            </div>
-          </div>
-        ),
-      },
-      { path: "products/update", main: () => <EditProduct /> },
     ],
   },
 
@@ -189,12 +177,11 @@ const myRoutes = [
         {
           path: "view/:id",
           main: () => (
-            <div>
-              <h1>Patient Detail</h1>
-            </div>
+            <ViewPatientForAdminRole />
           ),
         },
-      ], },
+      ]},
+      
       { path: "doctors", main: () => <div className="min-h-screen p-5 w-full">
         <div className=" mx-auto space-y-6">
           <DoctorOfAdminPage />
@@ -251,22 +238,22 @@ const myRoutes = [
         ],
       },
 
-      {
-        path: "appointment",
-        main: () => (
-          <div className="min-h-screen p-5 w-full">
-            <div className=" mx-auto space-y-6">
-              <AppointmentPage />
-            </div>
-          </div>
-        ),
-        routeChild: [
-          {
-            path: "view/:id",
-            main: () => <div className="h-50 w-50 bg-blue-500">View</div>,
-          },
-        ],
-      },
+      // {
+      //   path: "appointment",
+      //   main: () => (
+      //     <div className="min-h-screen p-5 w-full">
+      //       <div className=" mx-auto space-y-6">
+      //         <AppointmentPage />
+      //       </div>
+      //     </div>
+      //   ),
+      //   routeChild: [
+      //     {
+      //       path: "view/:id",
+      //       main: () => <ViewPatientForAdminRole />,
+      //     },
+      //   ],
+      // },
     ],
   },
   //dash for user

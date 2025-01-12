@@ -4,12 +4,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAppointmentByDoctorId } from "../../services/appointment";
 import AppointmentCard from "../../components/Dashboard/appointment/AppointmentCard";
-import { getDoctorById } from "../../services/doctorProfile";
+import { getDoctorById, updateDoctorActive } from "../../services/doctorProfile";
+import DoctorStatusDialog from "../../components/ui/DoctorStatusDialog";
 
 export default function ViewDoctorOfAdmin() {
   const [appointments, setAppointments] = useState([]);
   const [doctor, setDoctor] = useState({});
   const [activeTab, setActiveTab] = useState("appointment");
+  const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
   const param = useParams();
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +27,20 @@ export default function ViewDoctorOfAdmin() {
     fetchData();
   }, [param]);
   console.log(doctor);
+
+  const handleStatusUpdate = async (newStatus) => {
+    console.log(newStatus);
+    try {
+      // Call your API here with the doctor ID and new status
+      // await updateDoctorStatus(doctor.id, newStatus);
+      await updateDoctorActive(doctor.id, newStatus);
+      setDoctor(prev => ({ ...prev, active: newStatus }));
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating doctor status:", error);
+    }
+  };
+
   const address = doctor.address;
   const formatAddress = address
     ? `${address.ward}-${address.district}-${address.province}`
@@ -41,17 +57,20 @@ export default function ViewDoctorOfAdmin() {
           </h2>
         </div>
         <div>
-          {/* <button
+          <button
+          onClick={() => setIsStatusDialogOpen(true)}
             className={` px-1 rounded-md ${
-              doctor.status === "ACCEPTED"
-                ? "bg-green-500"
-                : doctor.status === "PENDING"
-                ? "bg-yellow-500"
-                : "bg-red-500"
+              doctor.active === true ? "bg-green-500" : "bg-red-500"   
             }`}
           >
-            {doctor.status || "PENDING"}
-          </button> */}
+            {doctor.active === true ? "Active" : "Unactive"}
+          </button>
+          <DoctorStatusDialog
+            isOpen={isStatusDialogOpen}
+            onClose={() => setIsStatusDialogOpen(false)}
+            onSubmit={handleStatusUpdate}
+            currentStatus={doctor.active}
+          />
           <h2 className="scrollbar-m-20 border-b pb-2 text-2xl font-normal tracking-tighter first:mt-0 ">
             Appointments({appointments.length})
           </h2>

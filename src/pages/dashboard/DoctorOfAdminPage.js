@@ -5,7 +5,7 @@ import PanelHeader from "../../components/Dashboard/appointment/PanelHeader";
 import PatientList from "../../components/Dashboard/patient/PatientList";
 import { Outlet } from "react-router-dom";
 import toast from "react-hot-toast";
-import { getAllDoctors, getAllDoctorsSort } from "../../services/doctorProfile";
+import { getAllDoctors, getAllDoctorsIncludeAllActive, getAllDoctorsSort } from "../../services/doctorProfile";
 import { TransactionList } from "../../components/Dashboard/Transactions/TransactionList";
 import DoctorList from "../../components/Dashboard/doctor/DoctorList";
 
@@ -17,7 +17,7 @@ export default function DoctorOfAdminPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getAllDoctors();
+        const res = await getAllDoctorsIncludeAllActive();
         setDoctors(res.data);
       } catch (error) {
         toast.error("Error fetching patients");
