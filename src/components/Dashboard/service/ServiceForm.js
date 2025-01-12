@@ -154,14 +154,14 @@ console.log("previewUrl: ", previewUrl);
             </div>
           </div>
         </div>
-        <div className="flex mr-10 items-between">
+        {/* <div className="flex mr-10 items-between">
           <button className="bg-blue-500 px-3 items-center rounded-sm text-xl mr-3">
             Save
           </button>
           <button className="bg-black text-white items-center rounded-sm text-xl">
             Cancel
           </button>
-        </div>
+        </div> */}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"

@@ -18,8 +18,8 @@ const NavbarFront = () => {
   if(userProfile.role === "DOCTOR"){
       navigate("/dashboard/doctor");
   }
-  if(userProfile.role === "PATIENT"){
-      navigate("/dashboard/patient");
+  if(userProfile.role === "USER"){
+      navigate("/dashboard/user/appointment");
 }}
   useEffect(() => {
     fetchProfile(false); // Không redirect nếu không fetch được dữ liệu
@@ -108,8 +108,8 @@ const NavbarFront = () => {
                   <Avatar
                     alt="User settings"
                     img={
-                      `${userProfile?.profilePicture}` ||
-                      "https://utfs.io/f/8b034fb4-1f45-425a-8c57-a7a68835311f-2558r.png"
+                      `${userProfile?.profilePicture?.trim()}` ? userProfile.profilePicture 
+                      :"https://utfs.io/f/8b034fb4-1f45-425a-8c57-a7a68835311f-2558r.png"
                     }
                     rounded
                   />

@@ -4,6 +4,7 @@ import "./App.css"; // hoặc './App.css' tùy vào file bạn đã thêm
 import myRoutes from "./routes";
 import { Toaster } from "react-hot-toast";
 import { UserProfileProvider } from "./context/userProfileContext";
+import './styles/custom.css';
 
 class App extends Component {
   render() {

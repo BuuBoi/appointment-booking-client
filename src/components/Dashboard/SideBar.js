@@ -42,11 +42,11 @@ const Sidebar = () => {
 
   const sideBarConfig = {
     user: [
-      {
-        name: "Dashboard",
-        path: "/dashboard/user",
-        icons: Home,
-      },
+      // {
+      //   name: "Dashboard",
+      //   path: "/dashboard/user",
+      //   icons: Home,
+      // },
       {
         name: "Appointment",
         path: "/dashboard/user/appointment",

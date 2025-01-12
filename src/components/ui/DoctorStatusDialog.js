@@ -9,7 +9,7 @@ export default function DoctorStatusDialog({
   currentStatus,
 }) {
   const [selectedStatus, setSelectedStatus] = useState(currentStatus);
-
+  console.log(selectedStatus);  
   if (!isOpen) return null;
 
   return (

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { sortTimeStrings, formatDate } from "../utils/timeUtil";
 import { formatVND } from "../utils/currency";
 import generateSlug from "../utils/generateSlug";
-import { sl } from "date-fns/locale/sl";
+
 export default function DoctorCard({ isInPerson = false, doctor }) {
   const defaultweeklyData = {
     monday: [],
@@ -51,7 +51,10 @@ export default function DoctorCard({ isInPerson = false, doctor }) {
         <h2 className="font-bold text-blue-900 uppercase ">
           {doctor.fullName}
         </h2>
-        <p className="text-sm py-3 line-clamp-2 ">{formatAddress}</p>
+        <di className="block">
+          <p className="text-sm py-3 address-truncate ">{formatAddress}</p>
+        </di>
+        {/* <div><p className="text-sm py-3 overflow-hidden text-ellipsis display-webkit-box webkit-line-clamp-2 webkit-box-orient-vertical">{formatAddress}</p></div> */}
         <div className="flex items-center gap-4 mt-auto">
           <div className="relative flex-shrink-0">
             <img

@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { useUserProfile } from "../../context/userProfileContext";
-import { getAppointmentByPatient } from "./../../services/appointment";
+import { getAppointmentByUserId } from "./../../services/appointment";
 import PanelHeader from "./../../components/Dashboard/appointment/PanelHeader";
 import ListPanel from "./../../components/Dashboard/appointment/ListPanel";
 import { Outlet } from "react-router-dom";
 export default function AppointmentPageRoleUser() {
   const { userProfile } = useUserProfile();
   const userId = userProfile?.id;
+  console.log("userId", userId);
   const [appointments, setAppointments] = React.useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getAppointmentByPatient(userId);
+        const response = await getAppointmentByUserId(userId);
         console.log("response", response);
         setAppointments(response);
       } catch (error) {

@@ -37,9 +37,10 @@ import { DoctorFormProvider } from "./context/DoctorFormContext";
 import DoctorOfAdminPage from "./pages/dashboard/DoctorOfAdminPage";
 import PatientOfAdminPage from "./pages/dashboard/PatientOfAdminPage";
 import ViewDoctorOfAdmin from "./pages/dashboard/ViewDoctorOfAdmin";
-  import AppointmentPageRoleUser from "./pages/dashboard/AppointmentPageRoleUser";
+import AppointmentPageRoleUser from "./pages/dashboard/AppointmentPageRoleUser";
 import ViewPatientForDoctorRole from "./pages/dashboard/ViewPatientForDoctorRole";
 import ViewPatientForAdminRole from "./pages/dashboard/ViewPatientForAdminRole";
+import ViewAppointmentForUser from "./pages/dashboard/ViewAppointmentForUser";
 
 const myRoutes = [
   {
@@ -160,7 +161,7 @@ const myRoutes = [
     main: () => (
       <UserProfileProvider>
         <DoctorFormProvider>
-        <BackendLayout />
+          <BackendLayout />
         </DoctorFormProvider>
       </UserProfileProvider>
     ),
@@ -168,35 +169,43 @@ const myRoutes = [
       { path: "", main: () => <DashboarPage /> }, // phai chia them dashboard cho tung role
 
       { path: "settings", main: () => <SettingPage /> },
-      { path: "patients", main: () => <div className="min-h-screen p-5 w-full">
-        <div className=" mx-auto space-y-6">
-          <PatientOfAdminPage />
-        </div>
-      </div>,
-       routeChild: [
-        {
-          path: "view/:id",
-          main: () => (
-            <ViewPatientForAdminRole />
-          ),
-        },
-      ]},
-      
-      { path: "doctors", main: () => <div className="min-h-screen p-5 w-full">
-        <div className=" mx-auto space-y-6">
-          <DoctorOfAdminPage />
-        </div>
-      </div>,
-       routeChild: [
-        {
-          path: "view/:id",
-          main: () => (
-            <div>
-              <ViewDoctorOfAdmin />
+      {
+        path: "patients",
+        main: () => (
+          <div className="min-h-screen p-5 w-full">
+            <div className=" mx-auto space-y-6">
+              <PatientOfAdminPage />
             </div>
-          ),
-        },
-      ], },
+          </div>
+        ),
+        routeChild: [
+          {
+            path: "view/:id",
+            main: () => <ViewPatientForAdminRole />,
+          },
+        ],
+      },
+
+      {
+        path: "doctors",
+        main: () => (
+          <div className="min-h-screen p-5 w-full">
+            <div className=" mx-auto space-y-6">
+              <DoctorOfAdminPage />
+            </div>
+          </div>
+        ),
+        routeChild: [
+          {
+            path: "view/:id",
+            main: () => (
+              <div>
+                <ViewDoctorOfAdmin />
+              </div>
+            ),
+          },
+        ],
+      },
       {
         path: "services",
         main: () => (
@@ -259,9 +268,15 @@ const myRoutes = [
   //dash for user
   {
     path: "/dashboard/user",
-    main: () => <UserProfileProvider><DoctorFormProvider><BackendLayout /></DoctorFormProvider></UserProfileProvider>,
+    main: () => (
+      <UserProfileProvider>
+        <DoctorFormProvider>
+          <BackendLayout />
+        </DoctorFormProvider>
+      </UserProfileProvider>
+    ),
     routeChild: [
-      { path: "", main: () => <DashboarPage /> },
+      // { path: "", main: () => <DashboarPage /> },
       // { path: "settings", main: () => <SettingPage /> },
       {
         path: "appointment",
@@ -275,7 +290,7 @@ const myRoutes = [
         routeChild: [
           {
             path: "view/:id",
-            main: () => <div className="h-50 w-50 bg-blue-500">View</div>,
+            main: () => <div><ViewAppointmentForUser/></div>,
           },
         ],
       },
@@ -293,7 +308,12 @@ const myRoutes = [
 
   {
     path: "/register",
-    main: () => <FrontendLayout> <RegisterContainer /> </FrontendLayout>,
+    main: () => (
+      <FrontendLayout>
+        {" "}
+        <RegisterContainer />{" "}
+      </FrontendLayout>
+    ),
   },
 ];
 export default myRoutes;

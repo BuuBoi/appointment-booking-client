@@ -35,7 +35,7 @@ export default function LoginForm() {
       const decode = jwtDecode(token);
       const role = decode.role;
       if (role === "USER") {
-        navigate("/dashboard/user");
+        navigate("/dashboard/user/appointment");
       }
       if (role === "ADMIN") {
         navigate("/dashboard/admin");

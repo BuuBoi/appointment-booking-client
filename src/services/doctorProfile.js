@@ -258,3 +258,18 @@ export const getDoctorsSearch= async (filters, currentPage, pageSize) => {
     throw new Error("Get profile failed");
   }
 };
+
+export const getDoctorByAppointment = async (appointmentId) => {
+  try {
+    const response = await axiosConfig({
+      method: "GET",
+      url: `/api/doctors/appointment/${appointmentId}`,
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error(response.data?.message || "Get profile failed");
+  } catch (error) {
+    throw new Error("Get profile failed");
+  }
+}

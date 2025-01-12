@@ -26,9 +26,14 @@ export const formatDate = (date = new Date()) => {
  * @returns Human readable elapsed time string
  */
 export function getTimeElapsed(dateTimeStr) {
-  const date = new Date(dateTimeStr);
+  
+  const date = new Date(dateTimeStr); 
   const now = new Date();
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+  const utc7Date = new Date(date.getTime() + (7 * 60 * 60 * 1000));
+  const utc7Now = new Date(now.getTime());
+  const diffInSeconds = Math.floor((utc7Now.getTime() - utc7Date.getTime()) / 1000);
+ // const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   // Less than a minute
   if (diffInSeconds < 60) {

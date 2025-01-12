@@ -215,7 +215,7 @@ export default function ServiceFormProps() {
                   key={service.id}
                   className={
                     service.id === selectedSpecialtyId
-                      ? "flex flex-col border items-center justify-center space-x-2 p-2 border-blue-600 rounded-md cursor-pointer"
+                      ? "flex flex-col border items-center justify-center space-x-2 p-2 border-blue-600 bg-slate-300 rounded-md cursor-pointer"
                       : "flex flex-col border items-center justify-center space-x-2 p-2 border-gray-300 rounded-md cursor-pointer"
                   }
                   onClick={() => setSelectedSpecialtyId(service.id)}
