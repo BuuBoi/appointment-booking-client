@@ -52,11 +52,6 @@ const Sidebar = () => {
         path: "/dashboard/user/appointment",
         icons: CalendarCheck,
       },
-      {
-        name: "Settings",
-        path: "/dashboard/user/settings",
-        icons: Settings,
-      },
     ],
     doctor: getDoctorTabs(userProfile?.id),
     admin: [
@@ -75,11 +70,11 @@ const Sidebar = () => {
         path: "/dashboard/admin/specials",
         icons: Stethoscope,
       },
-      {
-        name: "Appointment",
-        path: "/dashboard/admin/appointment",
-        icons: CalendarCheck,
-      },
+      // {
+      //   name: "Appointment",
+      //   path: "/dashboard/admin/appointment",
+      //   icons: CalendarCheck,
+      // },
       {
         name: "Doctors",
         path: "/dashboard/admin/doctors",
@@ -90,11 +85,11 @@ const Sidebar = () => {
         path: "/dashboard/admin/patients",
         icons: User,
       },
-      {
-        name: "Settings",
-        path: "/dashboard/admin/settings",
-        icons: Settings,
-      },
+      // {
+      //   name: "Settings",
+      //   path: "/dashboard/admin/settings",
+      //   icons: Settings,
+      // },
     ],
   };
   const tabs = sideBarConfig[useRole?.toLowerCase()]||[];
@@ -109,8 +104,8 @@ const Sidebar = () => {
     navigate('/login');
   };
   return (
-    <div className="hidden xl:flex xl:w-64 xl:flex-col border-r border-gray-300">
-      <div className="flex flex-col pt-5 overflow-y-auto">
+    <div className="hidden xl:flex xl:w-64 xl:flex-col border-r border-gray-300 h-screen">
+      <div className="flex flex-col pt-5 overflow-y-auto h-full justify-between">
         <div className="flex flex-col justify-between flex-1 h-full px-4">
           <div className="px-4">
             <p className="px-4 text-xs font-semibold tracking-widest text-gray-400 uppercase">
@@ -136,7 +131,7 @@ const Sidebar = () => {
         </div>
         
       </div>
-      <div className="mt-auto p-4 ">
+      <div className=" p-4 ">
           <Button size="sm" className="w-full" onClick={handleLogout}>
             <Power className="w-4 h-4 mr-2" />
             Logout

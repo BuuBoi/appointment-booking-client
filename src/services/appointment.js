@@ -76,7 +76,7 @@ export const createAppointment = async (data) => {
     try {
       const response = await axiosConfig({
         method: "GET",
-        url: `/api/appointments/patients/${patientId}`,
+        url: `/api/appointments/patient/${patientId}`,
       });
       if (response.status === 200) {
         return response.data;
@@ -101,5 +101,21 @@ export const createAppointment = async (data) => {
       throw new Error("Get profile failed");
     }
   };
+
+ export const getAppointmentByDoctorIdAndPatientId = async (doctorId, patientId) => {
+    try {
+      const response = await axiosConfig({
+        method: "GET",
+        url: `/api/appointments/doctor/${doctorId}/patient/${patientId}`,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      throw new Error(response.data?.message || "Get profile failed");
+    } catch (error) {
+      throw new Error("Get profile failed");
+    }
+  }
+ 
 
   

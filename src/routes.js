@@ -37,6 +37,8 @@ import { DoctorFormProvider } from "./context/DoctorFormContext";
 import DoctorOfAdminPage from "./pages/dashboard/DoctorOfAdminPage";
 import PatientOfAdminPage from "./pages/dashboard/PatientOfAdminPage";
 import ViewDoctorOfAdmin from "./pages/dashboard/ViewDoctorOfAdmin";
+  import AppointmentPageRoleUser from "./pages/dashboard/AppointmentPageRoleUser";
+import ViewPatientForDoctorRole from "./pages/dashboard/ViewPatientForDoctorRole";
 
 const myRoutes = [
   {
@@ -142,7 +144,7 @@ const myRoutes = [
             path: "view/:id",
             main: () => (
               <div>
-                <h1>Patient Detail</h1>
+                <ViewPatientForDoctorRole />
               </div>
             ),
           },
@@ -273,13 +275,13 @@ const myRoutes = [
     main: () => <UserProfileProvider><DoctorFormProvider><BackendLayout /></DoctorFormProvider></UserProfileProvider>,
     routeChild: [
       { path: "", main: () => <DashboarPage /> },
-      { path: "settings", main: () => <SettingPage /> },
+      // { path: "settings", main: () => <SettingPage /> },
       {
         path: "appointment",
         main: () => (
           <div className="min-h-screen p-5 w-full">
             <div className=" mx-auto space-y-6">
-              <AppointmentPage />
+              <AppointmentPageRoleUser />
             </div>
           </div>
         ),
@@ -290,18 +292,6 @@ const myRoutes = [
           },
         ],
       },
-      {
-        path: "products",
-        main: () => (
-          <div className="min-h-screen p-10 w-full">
-            <div className=" mx-auto space-y-6">
-              <ProductPage />
-              {/* <Outlet/> */}
-            </div>
-          </div>
-        ),
-      },
-      { path: "products/update", main: () => <EditProduct /> },
     ],
   },
 
